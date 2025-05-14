@@ -23,4 +23,27 @@ In order to build this project for the first time, use the following command:
 
 After that, you can run the Spring Boot Web application using the following command:
 
-    $ java -jar mystore-web/target/myproject-web.jar
+    $ java -jar mystore-web/target/mystore-web.jar
+
+### Running over PostgreSQL
+
+In order to run the project with PostgreSQL, you must create a database named `ds2` and a superuser `ds2` to manipulate
+the structure of the database using Flyway. Here is an exemple of script to start a new database for this project:
+
+    create user ds2 with superuser;
+    alter user ds2 with password 'ds2';
+    create database ds2 owner ds2;
+
+Also, you must create the user that will use the database from the application without DDL rights, juste a normal app
+account, like this:
+
+    create user web with password 'web';
+
+Finally, you must start the app using the `postgresql` Spring profile:
+
+    $ java -jar mystore-web/target/mystore-web.jar -Dspring.profiles.active=postgresql
+
+*Note*: During the first start, some sample data will be loaded from the data.sql file. You must change the value of the
+property `spring.sql.init.mode` to `never` in order to use the app after a restart. Otherwise, the app will try to read
+the same file again, and you will get primary key violation messages. You can also remove the data.sql file if you do
+not want sample data to be loaded in the database. Only the categories table should have some real data ready to use.
