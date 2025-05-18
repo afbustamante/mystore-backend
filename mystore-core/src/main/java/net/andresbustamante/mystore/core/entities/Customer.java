@@ -22,26 +22,26 @@ public class Customer implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "customerid", nullable = false)
+    @Column(name = "customer_id", nullable = false)
     private Integer id;
 
     @Size(max = 50)
     @NotNull
-    @Column(name = "firstname", nullable = false, length = 50)
+    @Column(name = "first_name", nullable = false, length = 50)
     private String firstName;
 
     @Size(max = 50)
     @NotNull
-    @Column(name = "lastname", nullable = false, length = 50)
+    @Column(name = "last_name", nullable = false, length = 50)
     private String lastName;
 
     @Size(max = 50)
     @NotNull
-    @Column(name = "address1", nullable = false, length = 50)
+    @Column(name = "address_1", nullable = false, length = 50)
     private String address1;
 
     @Size(max = 50)
-    @Column(name = "address2", length = 50)
+    @Column(name = "address_2", length = 50)
     private String address2;
 
     @Size(max = 50)
@@ -75,17 +75,17 @@ public class Customer implements Serializable {
     private String phone;
 
     @NotNull
-    @Column(name = "creditcardtype")
+    @Column(name = "credit_card_type")
     private Integer creditCardType;
 
     @Size(max = 50)
     @NotNull
-    @Column(name = "creditcard", nullable = false, length = 50)
+    @Column(name = "credit_card_number", nullable = false, length = 50)
     private String creditCard;
 
     @Size(max = 50)
     @NotNull
-    @Column(name = "creditcardexpiration", nullable = false, length = 50)
+    @Column(name = "credit_card_expiration_date", nullable = false, length = 50)
     private String creditCardExpiration;
 
     @Size(max = 50)

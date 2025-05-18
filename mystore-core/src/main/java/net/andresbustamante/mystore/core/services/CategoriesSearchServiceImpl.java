@@ -21,6 +21,6 @@ public class CategoriesSearchServiceImpl implements CategoriesSearchService {
 
     @Override
     public Collection<Category> findCategories() {
-        return categoryDao.findAll().stream().map((category) -> new Category(category.getId(), category.getName())).toList();
+        return categoryDao.findAll().stream().map(category -> new Category(category.getId(), category.getName())).toList();
     }
 }

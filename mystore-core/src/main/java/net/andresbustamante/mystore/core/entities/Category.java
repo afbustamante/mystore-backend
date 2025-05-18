@@ -21,10 +21,10 @@ import lombok.Setter;
 public class Category implements Serializable {
 
     @Id
-    @Column(name = "category", nullable = false)
+    @Column(name = "category_id", nullable = false)
     private Short id;
 
-    @Column(name = "categoryname", nullable = false)
+    @Column(name = "name", nullable = false)
     private String name;
 
     @Override

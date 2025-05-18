@@ -25,20 +25,20 @@ public class Order implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "orderid", nullable = false)
+    @Column(name = "order_id", nullable = false)
     private Integer id;
 
     @NotNull
-    @Column(name = "orderdate")
+    @Column(name = "order_date")
     private LocalDate orderDate;
 
     @ManyToOne
     //@org.hibernate.annotations.OnDelete(action = org.hibernate.annotations.OnDeleteAction.SET_NULL)
-    @JoinColumn(name = "customerid")
+    @JoinColumn(name = "customer_id")
     private Customer customer;
 
     @NotNull
-    @Column(name = "netamount", nullable = false)
+    @Column(name = "net_amount", nullable = false)
     private BigDecimal netAmount;
 
     @NotNull
@@ -46,6 +46,6 @@ public class Order implements Serializable {
     private BigDecimal tax;
 
     @NotNull
-    @Column(name = "totalamount", nullable = false)
+    @Column(name = "total_amount", nullable = false)
     private BigDecimal totalAmount;
 }
