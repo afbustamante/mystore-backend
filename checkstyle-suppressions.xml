@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE suppressions PUBLIC
+        "-//Checkstyle//DTD SuppressionFilter Configuration 1.2//EN"
+        "https://checkstyle.org/dtds/suppressions_1_2.dtd">
+
+<suppressions>
+    <!-- Tone down the checking for test code -->
+    <suppress checks="MagicNumber" files="[\\/][A-Za-z]+Test\.java"/>
+    <suppress checks="MagicNumber" files="[\\/][A-Za-z]+IT\.java"/>
+
+    <!-- Do not read Spring Boot application classes as utility classes -->
+    <suppress checks="HideUtilityClassConstructor" files="[\\/][A-Za-z]+Application\.java"/>
+</suppressions>

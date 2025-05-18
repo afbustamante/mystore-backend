@@ -1,0 +1,115 @@
+<?xml version="1.0"?>
+<!DOCTYPE module PUBLIC "-//Checkstyle//DTD Checkstyle Configuration 1.3//EN"
+        "https://checkstyle.org/dtds/configuration_1_3.dtd">
+
+<module name="Checker">
+  <property name="severity" value="error"/>
+  <property name="fileExtensions" value="java, properties, xml"/>
+
+  <module name="NewlineAtEndOfFile"/>
+  <module name="UniqueProperties"/>
+
+  <!-- Checks that a package-info.java file exists for each package.     -->
+  <module name="JavadocPackage"/>
+
+  <module name="SuppressionFilter">
+    <property name="file" value="${org.checkstyle.sun.suppressionfilter.config}"
+              default="checkstyle-suppressions.xml"/>
+    <property name="optional" value="true"/>
+  </module>
+
+  <module name="TreeWalker">
+    <!-- Imports -->
+    <module name="IllegalImport">
+      <property name="illegalPkgs" value="sun, com.sun, com.google.common,
+           org.apache.commons.collections, org.jfree, io.micrometer, org.bouncycastle, 
+           org.apache.jena.ext, org.jboss.logging, org.joda"/>
+    </module>
+    <module name="RedundantImport"/>
+    <module name="UnusedImports">
+      <property name="processJavadoc" value="true"/>
+    </module>
+    <module name="AvoidStarImport">
+      <property name="allowStaticMemberImports" value="true"/>
+    </module>
+
+    <!-- Naming conventions -->
+    <module name="ConstantName"/>
+    <module name="PatternVariableName"/>
+    <module name="LocalFinalVariableName"/>
+    <module name="LocalVariableName"/>
+    <module name="StaticVariableName"/>
+    <module name="LambdaParameterName"/>
+    <module name="PackageName"/>
+    <module name="TypeName"/>
+    <module name="MethodName"/>
+    <module name="AbstractClassName"/>
+    <module name="ClassTypeParameterName"/>
+    <module name="IllegalIdentifierName"/>
+    <module name="InterfaceTypeParameterName"/>
+    <module name="AbbreviationAsWordInName"/>
+
+    <!-- Bad practices -->
+    <module name="StringLiteralEquality"/>
+    <module name="EqualsAvoidNull"/>
+    <module name="EmptyBlock"/>
+    <module name="EmptyCatchBlock"/>
+    <module name="EmptyStatement"/>
+    <module name="NoEnumTrailingComma"/>
+    <module name="UnnecessaryParentheses"/>
+    <module name="UnnecessarySemicolonInEnumeration"/>
+    <module name="UnnecessarySemicolonInTryWithResources"/>
+    <module name="UnnecessarySemicolonAfterOuterTypeDeclaration"/>
+    <module name="UnnecessarySemicolonAfterTypeMemberDeclaration"/>
+    <module name="UnusedLocalVariable"/>
+    <module name="NoArrayTrailingComma"/>
+    <module name="AvoidNoArgumentSuperConstructorCall"/>
+    <module name="ArrayTypeStyle"/>
+    <module name="ModifierOrder"/>
+    <module name="RedundantModifier"/>
+    <module name="ParameterAssignment"/>
+    <module name="IllegalType">
+      <property name="illegalClassNames" value="HashMap, HashSet, LinkedHashMap,
+           LinkedHashSet, TreeMap, TreeSet, java.util.HashMap, java.util.HashSet, 
+           java.util.LinkedHashMap, java.util.LinkedHashSet, java.util.TreeMap, 
+           java.util.TreeSet, ArrayList, LinkedList, Vector"/>
+    </module>
+    <module name="IllegalInstantiation">
+      <property name="classes" value="java.lang.Boolean, java.lang.Integer,
+           java.io.FileInputStream, java.io.FileOutputStream"/>
+    </module>
+    <module name="HideUtilityClassConstructor"/>
+    <module name="LeftCurly"/>
+    <module name="RightCurly"/>
+    <module name="OneStatementPerLine"/>
+    <module name="SimplifyBooleanReturn"/>
+    <module name="SimplifyBooleanExpression"/>
+    <module name="MissingSwitchDefault"/>
+    <module name="DefaultComesLast"/>
+    <module name="ModifiedControlVariable"/>
+    <module name="UpperEll"/>
+    <module name="HiddenField">
+      <property name="ignoreConstructorParameter" value="true"/>
+    </module>
+
+    <!-- Checks for class design -->
+    <module name="DeclarationOrder"/>
+    <module name="FinalClass"/>
+    <module name="InterfaceIsType"/>
+    <module name="VisibilityModifier"/>
+    <module name="InnerTypeLast"/>
+    <module name="MutableException"/>
+    <module name="OneTopLevelClass"/>
+    <module name="ThrowsCount"/>
+
+    <!-- Annotations -->
+    <module name="MissingOverride"/>
+    <module name="MissingDeprecated"/>
+    <module name="AnnotationUseStyle"/>
+
+    <!-- Metrics -->
+    <module name="BooleanExpressionComplexity"/>
+    <module name="CyclomaticComplexity"/>
+    <module name="JavaNCSS"/>
+  </module>
+</module>
