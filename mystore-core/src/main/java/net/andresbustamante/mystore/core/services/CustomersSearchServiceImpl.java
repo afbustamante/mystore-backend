@@ -27,7 +27,6 @@ public class CustomersSearchServiceImpl implements CustomersSearchService {
             cust.setFirstName(customer.getFirstName());
             cust.setLastName(customer.getLastName());
             cust.setEmail(customer.getEmail());
-            cust.setUsername(customer.getUsername());
             return cust;
         }).toList();
     }

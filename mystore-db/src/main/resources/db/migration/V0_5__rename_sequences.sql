@@ -1,0 +1,4 @@
+ALTER SEQUENCE categories_category_seq RENAME TO categories_category_id_seq;
+ALTER SEQUENCE customers_customerid_seq RENAME TO customers_customer_id_seq;
+ALTER SEQUENCE orders_orderid_seq RENAME TO orders_order_id_seq;
+ALTER SEQUENCE products_prod_id_seq RENAME TO products_product_id_seq;

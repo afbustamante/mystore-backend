@@ -11,20 +11,26 @@ ALTER TABLE customers_history
 
 CREATE INDEX ix_customers_history_product_id ON customers_history (product_id);
 
+ALTER TABLE customers_history
+    ADD CONSTRAINT fk_customers_history_customer FOREIGN KEY (customer_id)
+        REFERENCES customers (customer_id);
+
+CREATE INDEX ix_customers_history_customer_id ON customers_history (customer_id);
+
 -- inventory
 ALTER TABLE inventory
     ADD CONSTRAINT fk_inventory_product FOREIGN KEY (product_id)
         REFERENCES products (product_id);
 
 -- orders_items
-ALTER TABLE orders_items
-    ADD CONSTRAINT pk_orders_items PRIMARY KEY (order_item_id, order_id);
+ALTER TABLE order_items
+    ADD CONSTRAINT pk_order_items PRIMARY KEY (order_item_id, order_id);
 
-ALTER TABLE orders_items
-    ADD CONSTRAINT fk_orders_items_product FOREIGN KEY (product_id)
+ALTER TABLE order_items
+    ADD CONSTRAINT fk_order_items_product FOREIGN KEY (product_id)
         REFERENCES products (product_id);
 
-CREATE INDEX ix_orders_items_product_id ON orders_items (product_id);
+CREATE INDEX ix_order_items_product_id ON order_items (product_id);
 
 -- products
 ALTER TABLE products

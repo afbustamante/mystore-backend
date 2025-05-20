@@ -14,7 +14,7 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "categories", uniqueConstraints = {
-        @UniqueConstraint(name = "uk_category_name", columnNames = "categoryname")
+        @UniqueConstraint(name = "uk_category_name", columnNames = "name")
 })
 @Getter
 @Setter

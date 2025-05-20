@@ -18,11 +18,11 @@ ALTER TABLE customers RENAME COLUMN creditcardexpiration TO credit_card_expirati
 ALTER TABLE inventory RENAME COLUMN prod_id TO product_id;
 ALTER TABLE inventory RENAME COLUMN quan_in_stock TO quantity_in_stock;
 
-ALTER TABLE orderlines RENAME TO orders_items;
-ALTER TABLE orders_items RENAME COLUMN orderlineid TO order_item_id;
-ALTER TABLE orders_items RENAME COLUMN orderid TO order_id;
-ALTER TABLE orders_items RENAME COLUMN prod_id TO product_id;
-ALTER TABLE orders_items DROP COLUMN orderdate;
+ALTER TABLE orderlines RENAME TO order_items;
+ALTER TABLE order_items RENAME COLUMN orderlineid TO order_item_id;
+ALTER TABLE order_items RENAME COLUMN orderid TO order_id;
+ALTER TABLE order_items RENAME COLUMN prod_id TO product_id;
+ALTER TABLE order_items DROP COLUMN orderdate;
 
 ALTER TABLE orders RENAME COLUMN orderid TO order_id;
 ALTER TABLE orders RENAME COLUMN orderdate TO order_date;
