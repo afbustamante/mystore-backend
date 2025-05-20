@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -39,7 +40,8 @@ public class Address implements Serializable {
     @Column(name = "postal_code", length = 9)
     private String postalCode;
 
+    @NotNull
     @ManyToOne
-    @JoinColumn(name = "city_id")
+    @JoinColumn(name = "city_id", nullable = false, foreignKey = @ForeignKey(name = "fk_addresses_city"))
     private City city;
 }

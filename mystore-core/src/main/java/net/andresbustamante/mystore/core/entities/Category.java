@@ -13,9 +13,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "categories", uniqueConstraints = {
-        @UniqueConstraint(name = "uk_category_name", columnNames = "name")
-})
+@Table(name = "categories", uniqueConstraints = @UniqueConstraint(name = "uc_category_name", columnNames = "name"))
 @Getter
 @Setter
 public class Category implements Serializable {

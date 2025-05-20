@@ -10,13 +10,14 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "countries")
+@Table(name = "countries", uniqueConstraints = @UniqueConstraint(name = "uc_country_name", columnNames = "name"))
 @Getter
 @Setter
 public class Country implements Serializable {
