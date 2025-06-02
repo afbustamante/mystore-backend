@@ -10,7 +10,7 @@ import net.andresbustamante.mystore.web.config.MapstructWebSpringConfig;
 import net.andresbustamante.mystore.web.dto.v1.OrderDto;
 
 @Mapper(config = MapstructWebSpringConfig.class)
-public interface OrderMapper {
+public interface OrderDtoMapper {
 
     OrderDto map(Order order);
 

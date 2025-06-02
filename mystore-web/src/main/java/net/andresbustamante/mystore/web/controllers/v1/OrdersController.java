@@ -12,18 +12,18 @@ import net.andresbustamante.mystore.api.model.Order;
 import net.andresbustamante.mystore.api.model.OrderSearchCriteria;
 import net.andresbustamante.mystore.api.services.OrdersSearchService;
 import net.andresbustamante.mystore.web.dto.v1.OrderDto;
-import net.andresbustamante.mystore.web.mappers.v1.OrderMapper;
+import net.andresbustamante.mystore.web.mappers.v1.OrderDtoMapper;
 
 @RestController
 @RequestMapping("/api/v1")
 public class OrdersController {
 
     private final OrdersSearchService ordersSearchService;
-    private final OrderMapper orderMapper;
+    private final OrderDtoMapper orderDtoMapper;
 
-    public OrdersController(final OrdersSearchService ordersSearchService, final OrderMapper orderMapper) {
+    public OrdersController(final OrdersSearchService ordersSearchService, final OrderDtoMapper orderDtoMapper) {
         this.ordersSearchService = ordersSearchService;
-        this.orderMapper = orderMapper;
+        this.orderDtoMapper = orderDtoMapper;
     }
 
     @GetMapping("/orders")
@@ -33,6 +33,6 @@ public class OrdersController {
                 .dateMax(LocalDate.parse("2009-01-31"))
                 .build();
         Collection<Order> orders = ordersSearchService.findOrders(criteria);
-        return ResponseEntity.ok(orderMapper.map(orders));
+        return ResponseEntity.ok(orderDtoMapper.map(orders));
     }
 }

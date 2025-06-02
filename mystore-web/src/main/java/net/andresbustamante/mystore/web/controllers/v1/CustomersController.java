@@ -11,24 +11,24 @@ import net.andresbustamante.mystore.api.model.Customer;
 import net.andresbustamante.mystore.api.model.CustomerSearchCriteria;
 import net.andresbustamante.mystore.api.services.CustomersSearchService;
 import net.andresbustamante.mystore.web.dto.v1.CustomerDto;
-import net.andresbustamante.mystore.web.mappers.v1.CustomerMapper;
+import net.andresbustamante.mystore.web.mappers.v1.CustomerDtoMapper;
 
 @RestController
 @RequestMapping("/api/v1")
 public class CustomersController {
 
     private final CustomersSearchService customersSearchService;
-    private final CustomerMapper customerMapper;
+    private final CustomerDtoMapper customerDtoMapper;
 
-    public CustomersController(final CustomersSearchService customersSearchService, final CustomerMapper customerMapper) {
+    public CustomersController(final CustomersSearchService customersSearchService, final CustomerDtoMapper customerDtoMapper) {
         this.customersSearchService = customersSearchService;
-        this.customerMapper = customerMapper;
+        this.customerDtoMapper = customerDtoMapper;
     }
 
     @GetMapping("/customers")
     public ResponseEntity<Collection<CustomerDto>> findCustomers() {
         CustomerSearchCriteria criteria = CustomerSearchCriteria.builder().country("France").build();
         Collection<Customer> customers = customersSearchService.findCustomers(criteria);
-        return ResponseEntity.ok(customerMapper.map(customers));
+        return ResponseEntity.ok(customerDtoMapper.map(customers));
     }
 }

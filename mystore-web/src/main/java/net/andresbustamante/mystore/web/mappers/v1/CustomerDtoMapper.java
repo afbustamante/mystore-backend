@@ -10,7 +10,7 @@ import net.andresbustamante.mystore.web.config.MapstructWebSpringConfig;
 import net.andresbustamante.mystore.web.dto.v1.CustomerDto;
 
 @Mapper(config = MapstructWebSpringConfig.class)
-public interface CustomerMapper {
+public interface CustomerDtoMapper {
 
     CustomerDto map(Customer customer);
 
