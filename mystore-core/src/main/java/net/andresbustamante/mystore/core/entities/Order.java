@@ -3,6 +3,7 @@ package net.andresbustamante.mystore.core.entities;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -12,9 +13,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -49,4 +50,7 @@ public class Order implements Serializable {
     @NotNull
     @Column(name = "total_amount", nullable = false)
     private BigDecimal totalAmount;
+
+    @OneToMany(mappedBy = "order")
+    private List<OrderItem> items;
 }
