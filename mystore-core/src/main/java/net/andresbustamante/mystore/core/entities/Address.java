@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -41,7 +42,7 @@ public class Address implements Serializable {
     private String postalCode;
 
     @NotNull
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "city_id", nullable = false, foreignKey = @ForeignKey(name = "fk_addresses_city"))
     private City city;
 }
