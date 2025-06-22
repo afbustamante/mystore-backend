@@ -5,10 +5,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class Customer extends Person {
+public class City {
 
     private Integer id;
-    private String username;
-    private String email;
-    private String phoneNumber;
+    private String name;
+    private Country country;
 }

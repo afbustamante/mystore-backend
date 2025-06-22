@@ -10,6 +10,8 @@ import net.andresbustamante.mystore.core.entities.Customer;
 
 public interface CustomerDao extends JpaRepository<Customer, Integer> {
 
+    boolean existsByEmail(String email);
+
     @Query("""
             from Customer c
             inner join c.address a

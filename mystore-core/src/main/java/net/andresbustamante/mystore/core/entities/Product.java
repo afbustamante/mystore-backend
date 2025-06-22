@@ -44,7 +44,7 @@ public class Product implements Serializable {
     private Short special;
 
     @NotNull
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "common_product_id", nullable = false,
             foreignKey = @ForeignKey(name = "fk_products_common_product"))
     private Product commonProduct;
