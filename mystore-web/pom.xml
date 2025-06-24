@@ -77,9 +77,19 @@
       <artifactId>spring-web</artifactId>
     </dependency>
 
+    <!-- Jakarta EE -->
+    <dependency>
+      <groupId>jakarta.servlet</groupId>
+      <artifactId>jakarta.servlet-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
     <dependency>
       <groupId>jakarta.validation</groupId>
       <artifactId>jakarta.validation-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>jakarta.annotation</groupId>
+      <artifactId>jakarta.annotation-api</artifactId>
     </dependency>
 
     <!-- Jackson libraries -->
@@ -96,6 +106,16 @@
       <artifactId>jackson-datatype-jsr310</artifactId>
     </dependency>
 
+    <!-- Swagger / OpenAPI -->
+    <dependency>
+      <groupId>io.swagger.core.v3</groupId>
+      <artifactId>swagger-annotations</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.openapitools</groupId>
+      <artifactId>jackson-databind-nullable</artifactId>
+    </dependency>
+
     <!-- Utilities -->
     <dependency>
       <groupId>org.projectlombok</groupId>
@@ -105,6 +125,10 @@
     <dependency>
       <groupId>org.mapstruct</groupId>
       <artifactId>mapstruct</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
     </dependency>
 
     <!-- Testing -->
@@ -146,6 +170,61 @@
               <goal>check</goal>
             </goals>
             <phase>validate</phase>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>io.swagger.codegen.v3</groupId>
+        <artifactId>swagger-codegen-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>generate-api</id>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+            <configuration>
+              <inputSpec>${project.basedir}/src/main/resources/openapi/mystore-rest-api.yaml</inputSpec>
+              <language>spring</language>
+              <modelPackage>net.andresbustamante.mystore.web.dto.v1</modelPackage>
+              <apiPackage>net.andresbustamante.mystore.web.controllers.v1</apiPackage>
+              <generateModels>true</generateModels>
+              <generateModelDocumentation>true</generateModelDocumentation>
+              <generateModelTests>false</generateModelTests>
+              <generateSupportingFiles>false</generateSupportingFiles>
+              <generateApis>true</generateApis>
+              <generateApiDocumentation>true</generateApiDocumentation>
+              <generateApiTests>false</generateApiTests>
+              <additionalProperties>
+                <additionalProperty>errorOnUnknownEnum=true</additionalProperty>
+              </additionalProperties>
+              <configOptions>
+                <java11>true</java11>
+                <jakarta>true</jakarta>
+                <dateLibrary>java8</dateLibrary>
+                <interfaceOnly>true</interfaceOnly>
+                <defaultInterfaces>false</defaultInterfaces>
+              </configOptions>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>build-helper-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <goals>
+              <goal>add-source</goal>
+            </goals>
+            <phase>generate-sources</phase>
+            <configuration>
+              <sources>
+                <source>${project.build.directory}/generated-sources/swagger/src/main/java</source>
+                <source>${project.build.directory}/generated-sources/annotations</source>
+              </sources>
+            </configuration>
           </execution>
         </executions>
       </plugin>

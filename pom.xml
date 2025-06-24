@@ -53,10 +53,12 @@
 
     <commons-collections.version>4.4</commons-collections.version>
 
+    <flyway.version>11.8.1</flyway.version>
+    <jackson-databind-nullable.version>0.2.6</jackson-databind-nullable.version>
     <junit-jupiter.version>5.11.4</junit-jupiter.version>
     <lombok.version>1.18.36</lombok.version>
     <mapstruct.version>1.6.3</mapstruct.version>
-    <flyway.version>11.8.1</flyway.version>
+    <swagger-annotations.version>2.2.28</swagger-annotations.version>
   </properties>
 
   <scm>
@@ -114,6 +116,16 @@
         <groupId>org.mapstruct</groupId>
         <artifactId>mapstruct</artifactId>
         <version>${mapstruct.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.swagger.core.v3</groupId>
+        <artifactId>swagger-annotations</artifactId>
+        <version>${swagger-annotations.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.openapitools</groupId>
+        <artifactId>jackson-databind-nullable</artifactId>
+        <version>${jackson-databind-nullable.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>

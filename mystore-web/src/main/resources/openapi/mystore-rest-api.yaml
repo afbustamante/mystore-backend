@@ -1,0 +1,434 @@
+---
+openapi: 3.0.3
+
+info:
+  title: My Store
+  description: My Store's REST API
+  version: v1
+
+servers:
+  - url: 'http://localhost:8000/api/v1'
+
+tags:
+  - name: categories
+  - name: cities
+  - name: countries
+  - name: customers
+  - name: orders
+
+paths:
+  /categories:
+    get:
+      summary: Finds categories
+      operationId: findCategories
+      tags:
+        - categories
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CategoryPage'
+        500:
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /countries:
+    get:
+      summary: Finds countries
+      operationId: findCountries
+      tags:
+        - countries
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CountryPage'
+        500:
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /countries/{id}/cities:
+    get:
+      summary: Finds cities in a country
+      operationId: findCitiesByCountry
+      tags:
+        - countries
+        - cities
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CityPage'
+        500:
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /customers:
+    get:
+      summary: Finds customers
+      operationId: findCustomers
+      tags:
+        - customers
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerPage'
+        500:
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    post:
+      summary: Create a customer
+      operationId: createCustomer
+      tags:
+        - customers
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerForm'
+      responses:
+        201:
+          description: Customer successfully created
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /customers/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          minimum: 0
+    get:
+      summary: Loads a customer's detail
+      operationId: findCustomer
+      tags:
+        - customers
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+        404:
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /orders:
+    get:
+      summary: Finds orders
+      operationId: findOrders
+      tags:
+        - orders
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderPage'
+        500:
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+security:
+  - basicAuth: []
+
+components:
+  schemas:
+    Address:
+      type: object
+      properties:
+        line_1:
+          type: string
+        line_2:
+          type: string
+        postal_code:
+          type: string
+        city:
+          type: string
+        country:
+          type: string
+
+    AddressForm:
+      type: object
+      properties:
+        line_1:
+          type: string
+        line_2:
+          type: string
+        postal_code:
+          type: string
+        city_id:
+          type: integer
+      required:
+        - line_1
+        - postal_code
+        - city_id
+
+    Category:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+
+    CategoryPage:
+      allOf:
+        - $ref: '#/components/schemas/Page'
+        - type: object
+          properties:
+            categories:
+              type: array
+              items:
+                $ref: '#/components/schemas/Category'
+
+    City:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+
+    CityPage:
+      allOf:
+        - $ref: '#/components/schemas/Page'
+        - type: object
+          properties:
+            cities:
+              type: array
+              items:
+                $ref: '#/components/schemas/City'
+
+    Country:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+
+    CountryPage:
+      allOf:
+        - $ref: '#/components/schemas/Page'
+        - type: object
+          properties:
+            countries:
+              type: array
+              items:
+                $ref: '#/components/schemas/Country'
+
+    Customer:
+      allOf:
+        - $ref: '#/components/schemas/Person'
+        - type: object
+          properties:
+            email:
+              type: string
+              format: email
+            phone_number:
+              type: string
+            age:
+              type: integer
+            gender:
+              type: string
+            address:
+              $ref: '#/components/schemas/Address'
+
+    CustomerItem:
+      allOf:
+        - $ref: '#/components/schemas/Person'
+        - type: object
+          properties:
+            email:
+              type: string
+              format: email
+
+    CustomerForm:
+      allOf:
+        - $ref: '#/components/schemas/PersonForm'
+        - type: object
+          properties:
+            birth_date:
+              type: string
+              format: date
+            email:
+              type: string
+              format: email
+              maxLength: 50
+            phone_number:
+              type: string
+              maxLength: 50
+            username:
+              type: string
+              maxLength: 20
+            password:
+              type: string
+              format: byte
+            address_line_1:
+              type: string
+              maxLength: 50
+            address_line_2:
+              type: string
+              maxLength: 50
+            postal_code:
+              type: string
+              maxLength: 9
+            city_id:
+              type: integer
+              minimum: 1
+          required:
+            - email
+            - username
+            - password
+            - address_line_1
+            - postal_code
+            - city_id
+
+    CustomerPage:
+      allOf:
+        - $ref: '#/components/schemas/Page'
+        - type: object
+          properties:
+            customers:
+              type: array
+              items:
+                $ref: '#/components/schemas/CustomerItem'
+
+    ErrorResponse:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+        status:
+          type: integer
+        error:
+          type: string
+        message:
+          type: string
+        path:
+          type: string
+          format: uri
+
+    OrderItem:
+      type: object
+      properties:
+        id:
+          type: integer
+        date:
+          type: string
+          format: date
+        net_amount:
+          type: number
+          format: double
+        total_amount:
+          type: number
+          format: double
+        tax:
+          type: number
+          format: double
+        customer_id:
+          type: integer
+
+    OrderPage:
+      allOf:
+        - $ref: '#/components/schemas/Page'
+        - type: object
+          properties:
+            orders:
+              type: array
+              items:
+                $ref: '#/components/schemas/OrderItem'
+
+    Page:
+      type: object
+      properties:
+        page:
+          type: integer
+        number_of_elements:
+          type: integer
+        total_elements:
+          type: integer
+
+    Person:
+      type: object
+      properties:
+        first_name:
+          type: string
+        last_name:
+          type: string
+
+    PersonForm:
+      type: object
+      properties:
+        first_name:
+          type: string
+          minLength: 2
+          maxLength: 50
+        last_name:
+          type: string
+          minLength: 2
+          maxLength: 50
+      required:
+        - first_name
+        - last_name
+
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: Basic Authentication

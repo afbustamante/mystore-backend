@@ -7,12 +7,12 @@ import org.mapstruct.Mapper;
 
 import net.andresbustamante.mystore.api.model.Order;
 import net.andresbustamante.mystore.web.config.MapstructWebSpringConfig;
-import net.andresbustamante.mystore.web.dto.v1.OrderDto;
+import net.andresbustamante.mystore.web.dto.v1.OrderItem;
 
 @Mapper(config = MapstructWebSpringConfig.class)
 public interface OrderDtoMapper {
 
-    OrderDto map(Order order);
+    OrderItem map(Order order);
 
-    List<OrderDto> map(Collection<Order> orders);
+    List<OrderItem> map(Collection<Order> orders);
 }
