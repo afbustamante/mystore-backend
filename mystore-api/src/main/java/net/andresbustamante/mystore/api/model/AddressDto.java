@@ -5,11 +5,11 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class Address {
+public class AddressDto {
 
     private Integer id;
     private String line1;
     private String line2;
     private String postalCode;
-    private City city;
+    private CityDto city;
 }

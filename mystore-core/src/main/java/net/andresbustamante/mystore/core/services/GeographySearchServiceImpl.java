@@ -5,8 +5,8 @@ import java.util.Collection;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import net.andresbustamante.mystore.api.model.City;
-import net.andresbustamante.mystore.api.model.Country;
+import net.andresbustamante.mystore.api.model.CityDto;
+import net.andresbustamante.mystore.api.model.CountryDto;
 import net.andresbustamante.mystore.api.services.GeographySearchService;
 import net.andresbustamante.mystore.core.dao.CityDao;
 import net.andresbustamante.mystore.core.dao.CountryDao;
@@ -31,12 +31,12 @@ public class GeographySearchServiceImpl implements GeographySearchService {
     }
 
     @Override
-    public Collection<Country> findCountries() {
+    public Collection<CountryDto> findCountries() {
         return countryMapper.map(countryDao.findAll());
     }
 
     @Override
-    public Collection<City> findCitiesByCountry(final Integer countryId) {
+    public Collection<CityDto> findCitiesByCountry(final Integer countryId) {
         return cityMapper.map(cityDao.findByCountryId(countryId));
     }
 }

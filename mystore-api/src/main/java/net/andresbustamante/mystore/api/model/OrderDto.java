@@ -8,7 +8,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class Order {
+public class OrderDto {
 
     private Integer id;
     private LocalDate date;

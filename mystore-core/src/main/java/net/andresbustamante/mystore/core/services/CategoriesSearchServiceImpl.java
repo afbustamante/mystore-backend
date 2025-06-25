@@ -5,7 +5,7 @@ import java.util.Collection;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import net.andresbustamante.mystore.api.model.Category;
+import net.andresbustamante.mystore.api.model.CategoryDto;
 import net.andresbustamante.mystore.api.services.CategoriesSearchService;
 import net.andresbustamante.mystore.core.dao.CategoryDao;
 
@@ -20,7 +20,7 @@ public class CategoriesSearchServiceImpl implements CategoriesSearchService {
     }
 
     @Override
-    public Collection<Category> findCategories() {
-        return categoryDao.findAll().stream().map(category -> new Category(category.getId(), category.getName())).toList();
+    public Collection<CategoryDto> findCategories() {
+        return categoryDao.findAll().stream().map(category -> new CategoryDto(category.getId(), category.getName())).toList();
     }
 }

@@ -6,15 +6,15 @@ import java.util.List;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-import net.andresbustamante.mystore.api.model.CountryDto;
+import net.andresbustamante.mystore.api.model.OrderDto;
 import net.andresbustamante.mystore.core.config.MapstructEntityMapperConfig;
-import net.andresbustamante.mystore.core.entities.Country;
+import net.andresbustamante.mystore.core.entities.Order;
 
 @Mapper(config = MapstructEntityMapperConfig.class)
-public interface CountryMapper {
+public interface OrderMapper {
 
-    @Mapping(target = "cities", ignore = true)
-    CountryDto map(Country country);
+    @Mapping(target = "customerId", source = "customer.id")
+    OrderDto map(Order order);
 
-    List<CountryDto> map(Collection<Country> countries);
+    List<OrderDto> map(Collection<Order> orders);
 }

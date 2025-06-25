@@ -9,5 +9,5 @@ import net.andresbustamante.mystore.core.entities.Order;
 
 public interface OrderDao extends JpaRepository<Order, Integer> {
 
-    List<Order> findAllByOrderDateBetween(LocalDate dateMin, LocalDate dateMax);
+    List<Order> findAllByDateBetween(LocalDate dateMin, LocalDate dateMax);
 }

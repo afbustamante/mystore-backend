@@ -7,9 +7,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class Country {
+public class CountryDto {
 
     private Integer id;
     private String name;
-    private Set<City> cities;
+    private Set<CityDto> cities;
 }

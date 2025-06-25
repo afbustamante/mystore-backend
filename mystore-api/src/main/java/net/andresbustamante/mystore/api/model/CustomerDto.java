@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class Customer extends Person {
+public class CustomerDto extends PersonDto {
 
     private Integer id;
     private String username;

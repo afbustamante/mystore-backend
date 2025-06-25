@@ -5,14 +5,14 @@ import java.util.List;
 
 import org.mapstruct.Mapper;
 
-import net.andresbustamante.mystore.api.model.Order;
+import net.andresbustamante.mystore.api.model.OrderDto;
 import net.andresbustamante.mystore.web.config.MapstructWebSpringConfig;
 import net.andresbustamante.mystore.web.dto.v1.OrderItem;
 
 @Mapper(config = MapstructWebSpringConfig.class)
 public interface OrderDtoMapper {
 
-    OrderItem map(Order order);
+    OrderItem map(OrderDto order);
 
-    List<OrderItem> map(Collection<Order> orders);
+    List<OrderItem> map(Collection<OrderDto> orders);
 }

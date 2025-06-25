@@ -2,12 +2,12 @@ package net.andresbustamante.mystore.api.services;
 
 import java.util.Collection;
 
-import net.andresbustamante.mystore.api.model.City;
-import net.andresbustamante.mystore.api.model.Country;
+import net.andresbustamante.mystore.api.model.CityDto;
+import net.andresbustamante.mystore.api.model.CountryDto;
 
 public interface GeographySearchService {
 
-    Collection<Country> findCountries();
+    Collection<CountryDto> findCountries();
 
-    Collection<City> findCitiesByCountry(Integer countryId);
+    Collection<CityDto> findCitiesByCountry(Integer countryId);
 }

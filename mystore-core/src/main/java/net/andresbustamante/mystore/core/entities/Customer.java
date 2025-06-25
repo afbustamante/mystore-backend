@@ -49,7 +49,7 @@ public class Customer implements Serializable {
 
     @Size(max = 50)
     @Column(name = "phone", length = 50)
-    private String phone;
+    private String phoneNumber;
 
     @Positive
     private Short age;

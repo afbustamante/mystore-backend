@@ -33,7 +33,7 @@ public class Order implements Serializable {
 
     @NotNull
     @Column(name = "order_date")
-    private LocalDate orderDate;
+    private LocalDate date;
 
     @ManyToOne(fetch = FetchType.LAZY)
     //@org.hibernate.annotations.OnDelete(action = org.hibernate.annotations.OnDeleteAction.SET_NULL)
