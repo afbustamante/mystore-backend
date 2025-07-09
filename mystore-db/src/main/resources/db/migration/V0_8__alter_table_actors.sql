@@ -1,0 +1,2 @@
+ALTER TABLE actors ADD COLUMN birth_date DATE;
+ALTER TABLE actors ADD COLUMN gender VARCHAR(1);

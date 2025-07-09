@@ -60,7 +60,8 @@ public class CustomersManagementServiceImpl implements CustomersManagementServic
 
         customer = customerDao.save(customer);
 
-        log.info("New customer created for {} with the ID {}", customer.getEmail(), customer.getId());
+        log.info("New customer {} ({}) registered with the ID {}", customer.getFullName(), customer.getEmail(),
+                customer.getId());
 
         return customer.getId();
     }
