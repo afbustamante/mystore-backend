@@ -63,11 +63,7 @@ pipeline {
                 script {
                     if (env.BRANCH_NAME == 'develop') {
                         // Run the Sonar analysis
-                        configFileProvider([configFile(fileId: '8d47e8c5-f619-4f36-a1dc-590dca78adb1', variable: 'SONAR_CONFIG')]) {
-                            // some block
-                            def props = readProperties file: "${SONAR_CONFIG}"
-                            sh "sh mvnw sonar:sonar -Dsonar.host.url=${props['sonar.host.url']} -Dsonar.token=${props['sonar.login']} -Dsonar.organization=${props['sonar.organization']}"
-                        }
+                        sh "sh mvnw sonar:sonar -P sonarcloud-github -Dsonar.projectKey=net.andresbustamante:mystore-backend"
                     } else {
                         echo 'Skipped Sonar analysis'
                     }
