@@ -1,7 +1,5 @@
 pipeline {
-    agent {
-        label 'jenkins-agent-1'
-    }
+    agent none
 
     options {
         timeout(time: 30, unit: 'MINUTES')
@@ -12,22 +10,43 @@ pipeline {
 
     stages {
         stage('Prepare') {
+            agent {
+                docker {
+                    image 'maven:3.9-ibm-semeru-17-noble'
+                    args '-v $HOME/.m2:/root/.m2'
+                    reuseNode true
+                }
+            }
             steps {
                 // Get code from GitHub repository
                 echo 'Pulling branch ' + env.GIT_BRANCH
-                sh 'sh mvnw clean'
+                sh 'mvn clean'
             }
         }
         stage('Build') {
+            agent {
+                docker {
+                    image 'maven:3.9-ibm-semeru-17-noble'
+                    args '-v $HOME/.m2:/root/.m2'
+                    reuseNode true
+                }
+            }
             steps {
                 // Run the maven build
-                sh 'sh mvnw compile'
+                sh 'mvn compile'
             }
         }
         stage('Test (UT)') {
+            agent {
+                docker {
+                    image 'maven:3.9-ibm-semeru-17-noble'
+                    args '-v $HOME/.m2:/root/.m2'
+                    reuseNode true
+                }
+            }
             steps {
                 // Run the maven build with tests
-                sh 'sh mvnw test'
+                sh 'mvn test'
             }
             post {
                 always {
@@ -36,9 +55,16 @@ pipeline {
             }
         }
         stage('Test (IT)') {
+            agent {
+                docker {
+                    image 'maven:3.9-ibm-semeru-17-noble'
+                    args '-v $HOME/.m2:/root/.m2'
+                    reuseNode true
+                }
+            }
             steps {
                 // Run the maven build with integration tests
-                sh 'sh mvnw verify'
+                sh 'mvn verify'
             }
             post {
                 always {
@@ -47,9 +73,16 @@ pipeline {
             }
         }
         stage('Report') {
+            agent {
+                docker {
+                    image 'maven:3.9-ibm-semeru-17-noble'
+                    args '-v $HOME/.m2:/root/.m2'
+                    reuseNode true
+                }
+            }
             steps {
                 script {
-                    sh 'sh mvnw site'
+                    sh 'mvn site'
                 }
             }
             post {
@@ -59,13 +92,20 @@ pipeline {
             }
         }
         stage('Analyze') {
+            agent {
+                docker {
+                    image 'maven:3.9-ibm-semeru-17-noble'
+                    args '-v $HOME/.m2:/root/.m2'
+                    reuseNode true
+                }
+            }
             steps {
                 script {
                     if (env.BRANCH_NAME == 'develop') {
                         // Run the Sonar analysis
                         configFileProvider([configFile(fileId: '956e942f-6748-449d-9596-478833bd8202', variable: 'SONAR_CONFIG')]) {
                             def props = readProperties file: "${SONAR_CONFIG}"
-                            sh "sh mvnw sonar:sonar -P sonarcloud -Dsonar.login=${props['sonar.token']} -Dsonar.projectKey=${props['sonar.projectKey']}"
+                            sh "mvn sonar:sonar -P sonarcloud -Dsonar.login=${props['sonar.token']} -Dsonar.projectKey=${props['sonar.projectKey']}"
                         }
                     } else {
                         echo 'Skipped Sonar analysis'
