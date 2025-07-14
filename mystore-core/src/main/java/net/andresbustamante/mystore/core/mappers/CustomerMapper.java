@@ -11,7 +11,7 @@ import net.andresbustamante.mystore.core.config.MapstructEntityMapperConfig;
 import net.andresbustamante.mystore.core.entities.Customer;
 
 @Mapper(config = MapstructEntityMapperConfig.class)
-public interface CustomerMapper {
+public interface CustomerMapper extends PageMapper<Customer, CustomerDto> {
 
     @Mapping(target = "username", source = "user.username")
     CustomerDto map(Customer customer);

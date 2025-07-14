@@ -1,15 +1,21 @@
 package net.andresbustamante.mystore.core.services;
 
 import java.util.Collection;
+import java.util.List;
 
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import net.andresbustamante.mystore.api.model.CityDto;
 import net.andresbustamante.mystore.api.model.CountryDto;
+import net.andresbustamante.mystore.api.model.Page;
+import net.andresbustamante.mystore.api.model.PagingRequest;
 import net.andresbustamante.mystore.api.services.GeographySearchService;
 import net.andresbustamante.mystore.core.dao.CityDao;
 import net.andresbustamante.mystore.core.dao.CountryDao;
+import net.andresbustamante.mystore.core.entities.City;
+import net.andresbustamante.mystore.core.entities.Country;
 import net.andresbustamante.mystore.core.mappers.CityMapper;
 import net.andresbustamante.mystore.core.mappers.CountryMapper;
 
@@ -32,11 +38,25 @@ public class GeographySearchServiceImpl implements GeographySearchService {
 
     @Override
     public Collection<CountryDto> findCountries() {
-        return countryMapper.map(countryDao.findAll());
+        List<Country> countries = countryDao.findAll();
+        return countryMapper.map(countries);
+    }
+
+    @Override
+    public Page<CountryDto> findCountries(final PagingRequest pagingRequest) {
+        var countries = countryDao.findAll(PageRequest.of(pagingRequest.pageNumber(), pagingRequest.pageSize()));
+        return countryMapper.map(countries);
     }
 
     @Override
     public Collection<CityDto> findCitiesByCountry(final Integer countryId) {
-        return cityMapper.map(cityDao.findByCountryId(countryId));
+        List<City> cities = cityDao.findByCountryId(countryId);
+        return cityMapper.map(cities);
+    }
+
+    @Override
+    public Page<CityDto> findCitiesByCountry(final Integer countryId, final PagingRequest pagingRequest) {
+        var cities = cityDao.findByCountryId(countryId, PageRequest.of(pagingRequest.pageNumber(), pagingRequest.pageSize()));
+        return cityMapper.map(cities);
     }
 }

@@ -1,12 +1,17 @@
 package net.andresbustamante.mystore.web.controllers.v1;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import jakarta.servlet.http.HttpServletRequest;
+import net.andresbustamante.mystore.api.model.CityDto;
+import net.andresbustamante.mystore.api.model.CountryDto;
+import net.andresbustamante.mystore.api.model.Page;
+import net.andresbustamante.mystore.api.model.PagingRequest;
 import net.andresbustamante.mystore.api.services.GeographySearchService;
 import net.andresbustamante.mystore.web.dto.v1.CityPage;
 import net.andresbustamante.mystore.web.dto.v1.CountryPage;
@@ -33,28 +38,14 @@ public class CountriesController extends AbstractController implements Countries
     }
 
     @Override
-    public ResponseEntity<CityPage> findCitiesByCountry(final Integer id) {
-        var cities = geographySearchService.findCitiesByCountry(id);
-
-        CityPage page = new CityPage();
-        page.setPage(0);
-        page.setNumberOfElements(cities.size());
-        page.setTotalElements(cities.size());
-        page.setCities(cityDtoMapper.map(cities));
-
-        return ResponseEntity.ok(page);
+    public ResponseEntity<CityPage> findCitiesByCountry(final Integer id, final Integer pageNumber, final Integer pageSize) {
+        Page<CityDto> cities = geographySearchService.findCitiesByCountry(id, PagingRequest.of(pageNumber, pageSize));
+        return ResponseEntity.ok(cityDtoMapper.map(cities));
     }
 
     @Override
-    public ResponseEntity<CountryPage> findCountries() {
-        var countries = geographySearchService.findCountries();
-
-        CountryPage page = new CountryPage();
-        page.setPage(0);
-        page.setNumberOfElements(countries.size());
-        page.setTotalElements(countries.size());
-        page.setCountries(countryDtoMapper.map(countries));
-
-        return ResponseEntity.ok(page);
+    public ResponseEntity<CountryPage> findCountries(final Integer pageNumber, final Integer pageSize) {
+        Page<CountryDto> countries = geographySearchService.findCountries(PagingRequest.of(pageNumber, pageSize));
+        return ResponseEntity.ok(countryDtoMapper.map(countries));
     }
 }

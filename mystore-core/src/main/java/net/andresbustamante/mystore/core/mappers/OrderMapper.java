@@ -11,7 +11,7 @@ import net.andresbustamante.mystore.core.config.MapstructEntityMapperConfig;
 import net.andresbustamante.mystore.core.entities.Order;
 
 @Mapper(config = MapstructEntityMapperConfig.class)
-public interface OrderMapper {
+public interface OrderMapper extends PageMapper<Order, OrderDto> {
 
     @Mapping(target = "customerId", source = "customer.id")
     OrderDto map(Order order);

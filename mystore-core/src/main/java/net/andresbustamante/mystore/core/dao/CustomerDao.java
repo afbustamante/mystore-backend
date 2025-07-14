@@ -2,6 +2,8 @@ package net.andresbustamante.mystore.core.dao;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -20,4 +22,13 @@ public interface CustomerDao extends JpaRepository<Customer, Integer> {
             where co.name = :country
         """)
     List<Customer> findAllByCountry(@Param("country") String country);
+
+    @Query("""
+            from Customer c
+            inner join c.address a
+            inner join a.city ci
+            inner join ci.country co
+            where co.name = :country
+        """)
+    Page<Customer> findAllByCountry(@Param("country") String country, Pageable pageRequest);
 }

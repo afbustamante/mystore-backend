@@ -11,7 +11,7 @@ import net.andresbustamante.mystore.core.config.MapstructEntityMapperConfig;
 import net.andresbustamante.mystore.core.entities.Country;
 
 @Mapper(config = MapstructEntityMapperConfig.class)
-public interface CountryMapper {
+public interface CountryMapper extends PageMapper<Country, CountryDto> {
 
     @Mapping(target = "cities", ignore = true)
     CountryDto map(Country country);

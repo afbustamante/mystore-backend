@@ -10,7 +10,7 @@ import net.andresbustamante.mystore.core.config.MapstructEntityMapperConfig;
 import net.andresbustamante.mystore.core.entities.City;
 
 @Mapper(config = MapstructEntityMapperConfig.class, uses = CountryMapper.class)
-public interface CityMapper {
+public interface CityMapper extends PageMapper<City, CityDto> {
 
     CityDto map(City city);
 

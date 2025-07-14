@@ -10,7 +10,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import net.andresbustamante.mystore.api.model.OrderDto;
 import net.andresbustamante.mystore.api.model.OrderSearchCriteria;
+import net.andresbustamante.mystore.api.model.Page;
+import net.andresbustamante.mystore.api.model.PagingRequest;
 import net.andresbustamante.mystore.api.services.OrdersSearchService;
 import net.andresbustamante.mystore.web.dto.v1.OrderPage;
 import net.andresbustamante.mystore.web.mappers.v1.OrderDtoMapper;
@@ -32,20 +35,13 @@ public class OrdersController extends AbstractController implements OrdersApi {
     }
 
     @Override
-    public ResponseEntity<OrderPage> findOrders() {
+    public ResponseEntity<OrderPage> findOrders(final Integer pageNumber, final Integer pageSize) {
         OrderSearchCriteria criteria = OrderSearchCriteria.builder()
                 .dateMin(LocalDate.parse("2009-01-01"))
                 .dateMax(LocalDate.parse("2009-01-31"))
                 .build();
 
-        var orders = ordersSearchService.findOrders(criteria);
-
-        OrderPage page = new OrderPage();
-        page.setPage(0);
-        page.setNumberOfElements(orders.size());
-        page.setTotalElements(orders.size());
-        page.setOrders(orderDtoMapper.map(orders));
-
-        return ResponseEntity.ok(page);
+        Page<OrderDto> orders = ordersSearchService.findOrders(criteria, PagingRequest.of(pageNumber, pageSize));
+        return ResponseEntity.ok(orderDtoMapper.map(orders));
     }
 }

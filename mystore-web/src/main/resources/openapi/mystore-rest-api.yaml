@@ -23,6 +23,21 @@ paths:
       operationId: findCategories
       tags:
         - categories
+      parameters:
+        - name: page_number
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+        - name: page_size
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 0
+            default: 10
       responses:
         200:
           description: OK
@@ -43,6 +58,21 @@ paths:
       operationId: findCountries
       tags:
         - countries
+      parameters:
+        - name: page_number
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+        - name: page_size
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 0
+            default: 10
       responses:
         200:
           description: OK
@@ -70,6 +100,20 @@ paths:
           required: true
           schema:
             type: integer
+        - name: page_number
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+        - name: page_size
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 0
+            default: 10
       responses:
         200:
           description: OK
@@ -90,6 +134,21 @@ paths:
       operationId: findCustomers
       tags:
         - customers
+      parameters:
+        - name: page_number
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+        - name: page_size
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 0
+            default: 10
       responses:
         200:
           description: OK
@@ -168,6 +227,21 @@ paths:
       operationId: findOrders
       tags:
         - orders
+      parameters:
+        - name: page_number
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+        - name: page_size
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 0
+            default: 10
       responses:
         200:
           description: OK
@@ -397,7 +471,7 @@ components:
     Page:
       type: object
       properties:
-        page:
+        page_number:
           type: integer
         number_of_elements:
           type: integer

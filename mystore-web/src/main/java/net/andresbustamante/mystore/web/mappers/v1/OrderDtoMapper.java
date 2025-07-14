@@ -4,10 +4,13 @@ import java.util.Collection;
 import java.util.List;
 
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 import net.andresbustamante.mystore.api.model.OrderDto;
+import net.andresbustamante.mystore.api.model.Page;
 import net.andresbustamante.mystore.web.config.MapstructWebSpringConfig;
 import net.andresbustamante.mystore.web.dto.v1.OrderItem;
+import net.andresbustamante.mystore.web.dto.v1.OrderPage;
 
 @Mapper(config = MapstructWebSpringConfig.class)
 public interface OrderDtoMapper {
@@ -15,4 +18,8 @@ public interface OrderDtoMapper {
     OrderItem map(OrderDto order);
 
     List<OrderItem> map(Collection<OrderDto> orders);
+
+    @Mapping(target = "orders", source = "elements")
+    @Mapping(target = "numberOfElements", source = "pageSize")
+    OrderPage map(Page<OrderDto> page);
 }

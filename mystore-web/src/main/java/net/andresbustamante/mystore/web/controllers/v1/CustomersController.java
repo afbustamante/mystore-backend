@@ -16,7 +16,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import net.andresbustamante.mystore.api.exceptions.FunctionalException;
 import net.andresbustamante.mystore.api.model.CustomerCreationDto;
+import net.andresbustamante.mystore.api.model.CustomerDto;
 import net.andresbustamante.mystore.api.model.CustomerSearchCriteria;
+import net.andresbustamante.mystore.api.model.Page;
+import net.andresbustamante.mystore.api.model.PagingRequest;
 import net.andresbustamante.mystore.api.services.CustomersManagementService;
 import net.andresbustamante.mystore.api.services.CustomersSearchService;
 import net.andresbustamante.mystore.web.dto.v1.Customer;
@@ -67,16 +70,13 @@ public class CustomersController extends AbstractController implements Customers
     }
 
     @Override
-    public ResponseEntity<CustomerPage> findCustomers() {
-        CustomerSearchCriteria criteria = CustomerSearchCriteria.builder().country("France").build();
-        var customers = customersSearchService.findCustomers(criteria);
+    public ResponseEntity<CustomerPage> findCustomers(final Integer pageNumber, final Integer pageSize) {
+        CustomerSearchCriteria criteria = CustomerSearchCriteria.builder()
+                .country("France")
+                .build();
+        Page<CustomerDto> customers = customersSearchService.findCustomers(criteria,
+                PagingRequest.of(pageNumber, pageSize));
 
-        CustomerPage page = new CustomerPage();
-        page.setPage(0);
-        page.setNumberOfElements(customers.size());
-        page.setTotalElements(customers.size());
-        page.setCustomers(customerDtoMapper.map(customers));
-
-        return ResponseEntity.ok(page);
+        return ResponseEntity.ok(customerDtoMapper.map(customers));
     }
 }
