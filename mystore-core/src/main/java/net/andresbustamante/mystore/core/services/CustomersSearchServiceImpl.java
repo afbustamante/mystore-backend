@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,7 +38,7 @@ public class CustomersSearchServiceImpl implements CustomersSearchService {
     @Override
     public Page<CustomerDto> findCustomers(final CustomerSearchCriteria criteria, PagingRequest pagingRequest) {
         var customers = customerDao.findAllByCountry(criteria.getCountry(),
-                PageRequest.of(pagingRequest.pageNumber(), pagingRequest.pageSize()));
+                PageRequest.of(pagingRequest.pageNumber(), pagingRequest.pageSize(), Sort.by("id").descending()));
         return customerMapper.map(customers);
     }
 }

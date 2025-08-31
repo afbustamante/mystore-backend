@@ -10,11 +10,16 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+
+import org.hibernate.annotations.SoftDelete;
+import org.hibernate.annotations.SoftDeleteType;
+
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
 @Table(name = "users")
+@SoftDelete(strategy = SoftDeleteType.ACTIVE, columnName = "active")
 @Getter
 @Setter
 public class User implements Serializable {
@@ -29,8 +34,8 @@ public class User implements Serializable {
     @Column(name = "username", nullable = false, length = 50)
     private String username;
 
-    @Size(max = 50)
+    @Size(max = 64)
     @NotNull
-    @Column(name = "password", nullable = false, length = 50)
+    @Column(name = "password", nullable = false, length = 64)
     private String password;
 }

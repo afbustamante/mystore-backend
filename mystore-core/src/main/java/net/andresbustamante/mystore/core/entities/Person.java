@@ -32,7 +32,6 @@ public class Person implements Serializable {
     @Column(name = "last_name", nullable = false, length = 50)
     private String lastName;
 
-    @Size(max = 1)
     @Column(name = "gender", length = 1)
     @Convert(converter = GenderConverter.class)
     private Gender gender;

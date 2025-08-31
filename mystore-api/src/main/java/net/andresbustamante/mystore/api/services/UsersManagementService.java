@@ -1,9 +1,27 @@
 package net.andresbustamante.mystore.api.services;
 
-import net.andresbustamante.mystore.api.exceptions.InvalidUsernameException;
+import net.andresbustamante.mystore.api.exceptions.ApplicationException;
 import net.andresbustamante.mystore.api.model.UserCreationDto;
 
+/**
+ * Users' management service.
+ */
 public interface UsersManagementService {
 
-    int createUser(UserCreationDto user) throws InvalidUsernameException;
+    /**
+     * Registers a new user in database.
+     *
+     * @param user User to register.
+     * @return Technical ID of the new user.
+     * @throws ApplicationException When the user cannot be stored in database.
+     */
+    int createUser(UserCreationDto user) throws ApplicationException;
+
+    /**
+     * Deactivates a user by using his technical ID.
+     *
+     * @param userId ID of the user to deactivate.
+     * @throws ApplicationException When the user cannot be deactivated in database.
+     */
+    void deactivateUser(Integer userId) throws ApplicationException;
 }

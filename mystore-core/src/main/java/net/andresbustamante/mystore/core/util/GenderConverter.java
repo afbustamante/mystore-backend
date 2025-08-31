@@ -17,6 +17,10 @@ public class GenderConverter implements AttributeConverter<Gender, String> {
 
     @Override
     public Gender convertToEntityAttribute(final String code) {
+        if (code == null) {
+            return null;
+        }
+
         return Stream.of(Gender.values())
                 .filter(c -> c.getCode().equals(code))
                 .findFirst()

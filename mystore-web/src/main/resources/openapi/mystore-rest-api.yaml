@@ -220,6 +220,36 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+    delete:
+      summary: Deactivates a customer
+      operationId: deactivateCustomer
+      tags:
+        - customers
+      responses:
+        204:
+          description: Customer successfully deactivated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+        403:
+          description: Not autorised to deactivate
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        404:
+          description: Customer not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 
   /orders:
     get:

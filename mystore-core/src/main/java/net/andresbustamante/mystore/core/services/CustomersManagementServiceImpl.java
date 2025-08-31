@@ -8,9 +8,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.extern.slf4j.Slf4j;
-import net.andresbustamante.mystore.api.exceptions.FunctionalException;
+import net.andresbustamante.mystore.api.exceptions.ApplicationException;
 import net.andresbustamante.mystore.api.exceptions.InvalidEmailException;
-import net.andresbustamante.mystore.api.exceptions.InvalidUsernameException;
+import net.andresbustamante.mystore.api.exceptions.ObjectNotFoundException;
 import net.andresbustamante.mystore.api.model.AddressCreationDto;
 import net.andresbustamante.mystore.api.model.CustomerCreationDto;
 import net.andresbustamante.mystore.api.model.UserCreationDto;
@@ -45,8 +45,8 @@ public class CustomersManagementServiceImpl implements CustomersManagementServic
     }
 
     @Override
-    @Transactional(rollbackFor = FunctionalException.class)
-    public int createCustomer(@NonNull final CustomerCreationDto newCustomer) throws FunctionalException {
+    @Transactional(rollbackFor = ApplicationException.class)
+    public int createCustomer(@NonNull final CustomerCreationDto newCustomer) throws ApplicationException {
         if (customerDao.existsByEmail(newCustomer.email().toLowerCase(Locale.getDefault()))) {
             throw new InvalidEmailException("A customer already exists for the given email address");
         }
@@ -66,13 +66,26 @@ public class CustomersManagementServiceImpl implements CustomersManagementServic
         return customer.getId();
     }
 
-    private User createUserForCustomer(final CustomerCreationDto newCustomer) throws InvalidUsernameException {
+    @Override
+    @Transactional(rollbackFor = ApplicationException.class)
+    public void deactivateCustomer(@NonNull final Integer customerId) throws ApplicationException {
+        Customer customer = customerDao.findById(customerId).orElseThrow(
+                () -> new ObjectNotFoundException(String.format("Customer not found with the given ID: %d", customerId)));
+
+        // Also deactivate the user to avoid any authentication attempt
+        usersManagementService.deactivateUser(customer.getUser().getId());
+        customerDao.delete(customer); // Hibernate makes a soft-delete here
+
+        log.info("Customer {} has been deactivated", customerId);
+    }
+
+    private User createUserForCustomer(final CustomerCreationDto newCustomer) throws ApplicationException {
         int userId = usersManagementService.createUser(new UserCreationDto(newCustomer.username(),
                 new String(newCustomer.password(),StandardCharsets.UTF_8)));
         return userDao.getReferenceById(userId);
     }
 
-    private Address createAddressForCustomer(final CustomerCreationDto newCustomer) {
+    private Address createAddressForCustomer(final CustomerCreationDto newCustomer) throws ApplicationException {
         AddressCreationDto newAddress = new AddressCreationDto(
                 newCustomer.addressLine1(), newCustomer.addressLine2(),
                 newCustomer.postalCode(), newCustomer.cityId());

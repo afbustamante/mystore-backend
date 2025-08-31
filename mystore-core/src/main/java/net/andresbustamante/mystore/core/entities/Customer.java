@@ -15,11 +15,15 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
 import jakarta.validation.constraints.Size;
 
+import org.hibernate.annotations.SoftDelete;
+import org.hibernate.annotations.SoftDeleteType;
+
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
 @Table(name = "customers")
+@SoftDelete(strategy = SoftDeleteType.ACTIVE, columnName = "active")
 @Getter
 @Setter
 public class Customer extends Person {

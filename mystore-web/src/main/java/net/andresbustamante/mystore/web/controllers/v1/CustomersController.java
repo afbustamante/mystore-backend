@@ -1,7 +1,6 @@
 package net.andresbustamante.mystore.web.controllers.v1;
 
-import static org.springframework.http.HttpStatus.CONFLICT;
-import static org.springframework.http.HttpStatus.NOT_IMPLEMENTED;
+import static org.springframework.http.HttpStatus.*;
 
 import java.net.URI;
 
@@ -14,6 +13,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import net.andresbustamante.mystore.api.exceptions.ApplicationException;
 import net.andresbustamante.mystore.api.exceptions.FunctionalException;
 import net.andresbustamante.mystore.api.model.CustomerCreationDto;
 import net.andresbustamante.mystore.api.model.CustomerDto;
@@ -59,7 +59,9 @@ public class CustomersController extends AbstractController implements Customers
 
             return ResponseEntity.created(URI.create(String.format("/api/v1/customers/%d", id))).build();
         } catch (FunctionalException e) {
-            throw new ResponseStatusException(CONFLICT, e.getMessage(), e);
+            throw new ResponseStatusException(CONFLICT, "Impossible to create the new customer", e);
+        } catch (ApplicationException e) {
+            throw new ResponseStatusException(INTERNAL_SERVER_ERROR, "Error while creating the new customer", e);
         }
     }
 
@@ -78,5 +80,17 @@ public class CustomersController extends AbstractController implements Customers
                 PagingRequest.of(pageNumber, pageSize));
 
         return ResponseEntity.ok(customerDtoMapper.map(customers));
+    }
+
+    @Override
+    public ResponseEntity<Customer> deactivateCustomer(final Integer customerId) {
+        try {
+            customersManagementService.deactivateCustomer(customerId);
+            return ResponseEntity.noContent().build();
+        } catch (FunctionalException e) {
+            throw new ResponseStatusException(UNAUTHORIZED, "Not allowed to deactivate this user", e);
+        } catch (ApplicationException e) {
+            throw new ResponseStatusException(INTERNAL_SERVER_ERROR, "Error while deactivating this user", e);
+        }
     }
 }
