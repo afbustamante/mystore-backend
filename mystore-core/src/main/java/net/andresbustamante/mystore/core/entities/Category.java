@@ -3,17 +3,25 @@ package net.andresbustamante.mystore.core.entities;
 import java.io.Serializable;
 import java.util.Objects;
 
+import jakarta.persistence.Cacheable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Immutable;
+
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
 @Table(name = "categories", uniqueConstraints = @UniqueConstraint(name = "uc_category_name", columnNames = "name"))
+@Cacheable
+@Cache(usage = CacheConcurrencyStrategy.READ_ONLY, region = "categories")
+@Immutable
 @Getter
 @Setter
 public class Category implements Serializable {

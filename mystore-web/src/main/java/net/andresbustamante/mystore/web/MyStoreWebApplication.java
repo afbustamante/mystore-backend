@@ -3,6 +3,7 @@ package net.andresbustamante.mystore.web;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -12,6 +13,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EntityScan(basePackages = "net.andresbustamante.mystore.core.entities")
 @EnableScheduling
 @EnableAsync
+@EnableCaching
 public class MyStoreWebApplication {
 
     public static void main(String[] args) {

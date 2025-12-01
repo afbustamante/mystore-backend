@@ -37,6 +37,11 @@ public class GeographySearchServiceImpl implements GeographySearchService {
     }
 
     @Override
+    public CountryDto findCountry(final Integer countryId) {
+        return countryMapper.map(countryDao.findById(countryId).orElseThrow());
+    }
+
+    @Override
     public Collection<CountryDto> findCountries() {
         List<Country> countries = countryDao.findAll();
         return countryMapper.map(countries);

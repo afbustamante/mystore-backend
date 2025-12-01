@@ -87,6 +87,32 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 
+  /countries/{id}:
+    get:
+      summary: Finds a country
+      operationId: findCountry
+      tags:
+        - countries
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Country'
+        500:
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
   /countries/{id}/cities:
     get:
       summary: Finds cities in a country
@@ -208,6 +234,35 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Customer'
+        404:
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    put:
+      summary: Updates a customer's detail
+      operationId: updateCustomer
+      tags:
+        - customers
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerForm'
+      responses:
+        202:
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerForm'
         404:
           description: Not found
           content:

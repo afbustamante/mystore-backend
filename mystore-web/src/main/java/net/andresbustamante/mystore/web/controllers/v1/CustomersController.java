@@ -18,6 +18,7 @@ import net.andresbustamante.mystore.api.exceptions.FunctionalException;
 import net.andresbustamante.mystore.api.model.CustomerCreationDto;
 import net.andresbustamante.mystore.api.model.CustomerDto;
 import net.andresbustamante.mystore.api.model.CustomerSearchCriteria;
+import net.andresbustamante.mystore.api.model.CustomerUpdateDto;
 import net.andresbustamante.mystore.api.model.Page;
 import net.andresbustamante.mystore.api.model.PagingRequest;
 import net.andresbustamante.mystore.api.services.CustomersManagementService;
@@ -62,6 +63,23 @@ public class CustomersController extends AbstractController implements Customers
             throw new ResponseStatusException(CONFLICT, "Impossible to create the new customer", e);
         } catch (ApplicationException e) {
             throw new ResponseStatusException(INTERNAL_SERVER_ERROR, "Error while creating the new customer", e);
+        }
+    }
+
+    @Override
+    public ResponseEntity<CustomerForm> updateCustomer(final Integer id, final CustomerForm body) {
+        CustomerUpdateDto customer = new CustomerUpdateDto(
+                body.getFirstName(), body.getLastName(), body.getEmail(), body.getPhoneNumber()
+        );
+
+        try {
+            customersManagementService.updateCustomer(id, customer);
+
+            return ResponseEntity.accepted().build();
+        } catch (FunctionalException e) {
+            throw new ResponseStatusException(CONFLICT, "Impossible to update the customer", e);
+        } catch (ApplicationException e) {
+            throw new ResponseStatusException(INTERNAL_SERVER_ERROR, "Error while updating the customer", e);
         }
     }
 

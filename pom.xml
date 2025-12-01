@@ -47,10 +47,10 @@
     <swagger-codegen-maven-plugin.version>3.0.67</swagger-codegen-maven-plugin.version>
 
     <!-- Libraries -->
-    <spring.version>6.2.8</spring.version>
-    <spring-boot.version>3.4.7</spring-boot.version>
-    <spring-data.version>3.4.7</spring-data.version>
-    <spring-security.version>6.4.7</spring-security.version>
+    <spring.version>6.2.14</spring.version>
+    <spring-boot.version>3.5.8</spring-boot.version>
+    <spring-data.version>3.5.6</spring-data.version>
+    <spring-security.version>6.5.7</spring-security.version>
 
     <jakarta.servlet-api.version>6.0.0</jakarta.servlet-api.version>
     <jakarta.persistence-api.version>3.1.0</jakarta.persistence-api.version>
@@ -60,18 +60,20 @@
     <commons-lang.version>3.18.0</commons-lang.version>
     <commons-collections.version>4.4</commons-collections.version>
 
+    <ehcache.version>3.11.1</ehcache.version>
     <flyway.version>11.8.1</flyway.version>
     <h2.version>2.3.232</h2.version>
-    <hibernate-core.version>6.6.18.Final</hibernate-core.version>
+    <hibernate-core.version>6.6.36.Final</hibernate-core.version>
     <jackson-databind-nullable.version>0.2.6</jackson-databind-nullable.version>
-    <jackson.version>2.18.4.1</jackson.version>
-    <junit-jupiter.version>5.11.4</junit-jupiter.version>
-    <logback.version>1.5.18</logback.version>
-    <lombok.version>1.18.36</lombok.version>
+    <jackson.version>2.19.4</jackson.version>
+    <jaxb-runtime.version>4.0.6</jaxb-runtime.version>
+    <junit-jupiter.version>5.12.2</junit-jupiter.version>
+    <logback.version>1.5.21</logback.version>
+    <lombok.version>1.18.42</lombok.version>
     <mapstruct.version>1.6.3</mapstruct.version>
-    <postgresql.version>42.7.7</postgresql.version>
+    <postgresql.version>42.7.8</postgresql.version>
     <slf4j.version>2.0.17</slf4j.version>
-    <swagger-annotations.version>2.2.28</swagger-annotations.version>
+    <swagger-annotations.version>2.2.41</swagger-annotations.version>
   </properties>
 
   <scm>
@@ -114,6 +116,11 @@
       <dependency>
         <groupId>org.springframework.data</groupId>
         <artifactId>spring-data-jpa</artifactId>
+        <version>${spring-data.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.data</groupId>
+        <artifactId>spring-data-envers</artifactId>
         <version>${spring-data.version}</version>
       </dependency>
 
@@ -161,6 +168,11 @@
       <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-test</artifactId>
+        <version>${spring-boot.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-cache</artifactId>
         <version>${spring-boot.version}</version>
       </dependency>
 
@@ -212,6 +224,29 @@
         <groupId>org.hibernate.orm</groupId>
         <artifactId>hibernate-core</artifactId>
         <version>${hibernate-core.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.hibernate.orm</groupId>
+        <artifactId>hibernate-jcache</artifactId>
+        <version>${hibernate-core.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.hibernate.orm</groupId>
+        <artifactId>hibernate-envers</artifactId>
+        <version>${hibernate-core.version}</version>
+      </dependency>
+
+      <!-- Caching -->
+      <dependency>
+        <groupId>org.ehcache</groupId>
+        <artifactId>ehcache</artifactId>
+        <classifier>jakarta</classifier>
+        <version>${ehcache.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.glassfish.jaxb</groupId>
+        <artifactId>jaxb-runtime</artifactId>
+        <version>${jaxb-runtime.version}</version>
       </dependency>
 
       <!-- Database -->
