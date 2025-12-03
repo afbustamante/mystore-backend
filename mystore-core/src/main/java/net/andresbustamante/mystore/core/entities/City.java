@@ -1,7 +1,9 @@
 package net.andresbustamante.mystore.core.entities;
 
 import java.io.Serializable;
+import java.util.Objects;
 
+import jakarta.persistence.Cacheable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -14,11 +16,19 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Immutable;
+
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
 @Table(name = "cities")
+@Cacheable
+@Cache(usage = CacheConcurrencyStrategy.READ_ONLY, region = "cities")
+@Immutable
 @Getter
 @Setter
 public class City implements Serializable {
@@ -41,4 +51,21 @@ public class City implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "country_id", nullable = false, foreignKey = @ForeignKey(name = "fk_cities_country"))
     private Country country;
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        City city = (City) o;
+        return Objects.equals(id, city.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
+    }
 }

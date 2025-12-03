@@ -14,6 +14,7 @@ import net.andresbustamante.mystore.api.model.Page;
 import net.andresbustamante.mystore.api.model.PagingRequest;
 import net.andresbustamante.mystore.api.services.GeographySearchService;
 import net.andresbustamante.mystore.web.dto.v1.CityPage;
+import net.andresbustamante.mystore.web.dto.v1.Country;
 import net.andresbustamante.mystore.web.dto.v1.CountryPage;
 import net.andresbustamante.mystore.web.mappers.v1.CityDtoMapper;
 import net.andresbustamante.mystore.web.mappers.v1.CountryDtoMapper;
@@ -47,5 +48,10 @@ public class CountriesController extends AbstractController implements Countries
     public ResponseEntity<CountryPage> findCountries(final Integer pageNumber, final Integer pageSize) {
         Page<CountryDto> countries = geographySearchService.findCountries(PagingRequest.of(pageNumber, pageSize));
         return ResponseEntity.ok(countryDtoMapper.map(countries));
+    }
+
+    @Override
+    public ResponseEntity<Country> findCountry(final Integer id) {
+        return ResponseEntity.ok(countryDtoMapper.map(geographySearchService.findCountry(id)));
     }
 }

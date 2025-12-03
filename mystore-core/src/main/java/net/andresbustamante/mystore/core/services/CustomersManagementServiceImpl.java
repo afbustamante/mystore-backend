@@ -13,6 +13,7 @@ import net.andresbustamante.mystore.api.exceptions.InvalidEmailException;
 import net.andresbustamante.mystore.api.exceptions.ObjectNotFoundException;
 import net.andresbustamante.mystore.api.model.AddressCreationDto;
 import net.andresbustamante.mystore.api.model.CustomerCreationDto;
+import net.andresbustamante.mystore.api.model.CustomerUpdateDto;
 import net.andresbustamante.mystore.api.model.UserCreationDto;
 import net.andresbustamante.mystore.api.services.AddressesManagementService;
 import net.andresbustamante.mystore.api.services.CustomersManagementService;
@@ -77,6 +78,21 @@ public class CustomersManagementServiceImpl implements CustomersManagementServic
         customerDao.delete(customer); // Hibernate makes a soft-delete here
 
         log.info("Customer {} has been deactivated", customerId);
+    }
+
+    @Override
+    @Transactional(rollbackFor = ApplicationException.class)
+    public void updateCustomer(final Integer customerId, final CustomerUpdateDto newCustomer) throws ApplicationException {
+        Customer customer = customerDao.findById(customerId).orElseThrow();
+
+        customer.setFirstName(newCustomer.firstName());
+        customer.setLastName(newCustomer.lastName());
+        customer.setEmail(newCustomer.email().toLowerCase(Locale.getDefault()));
+        customer.setPhoneNumber(newCustomer.phoneNumber());
+
+        customerDao.save(customer);
+
+        log.info("The customer {} has been successfully updated", customerId);
     }
 
     private User createUserForCustomer(final CustomerCreationDto newCustomer) throws ApplicationException {

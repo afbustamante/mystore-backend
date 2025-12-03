@@ -63,6 +63,16 @@
       <groupId>org.springframework.data</groupId>
       <artifactId>spring-data-jpa</artifactId>
     </dependency>
+    <!--
+    <dependency>
+      <groupId>org.springframework.data</groupId>
+      <artifactId>spring-data-envers</artifactId>
+    </dependency>
+    -->
+    <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-core</artifactId>
+    </dependency>
 
     <dependency>
       <groupId>jakarta.persistence</groupId>
@@ -92,6 +102,12 @@
       <groupId>org.hibernate.orm</groupId>
       <artifactId>hibernate-core</artifactId>
     </dependency>
+    <!--
+    <dependency>
+      <groupId>org.hibernate.orm</groupId>
+      <artifactId>hibernate-envers</artifactId>
+    </dependency>
+    -->
 
     <dependency>
       <groupId>org.slf4j</groupId>

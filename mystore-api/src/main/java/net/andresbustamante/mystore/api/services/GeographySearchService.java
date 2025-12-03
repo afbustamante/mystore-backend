@@ -9,6 +9,8 @@ import net.andresbustamante.mystore.api.model.PagingRequest;
 
 public interface GeographySearchService {
 
+    CountryDto findCountry(Integer countryId);
+
     Collection<CountryDto> findCountries();
 
     Page<CountryDto> findCountries(PagingRequest pagingRequest);

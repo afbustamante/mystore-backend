@@ -2,6 +2,7 @@ package net.andresbustamante.mystore.api.services;
 
 import net.andresbustamante.mystore.api.exceptions.ApplicationException;
 import net.andresbustamante.mystore.api.model.CustomerCreationDto;
+import net.andresbustamante.mystore.api.model.CustomerUpdateDto;
 
 /**
  * Customers' management service.
@@ -9,13 +10,22 @@ import net.andresbustamante.mystore.api.model.CustomerCreationDto;
 public interface CustomersManagementService {
 
     /**
-     * Creqtes a new customer in the application.
+     * Creates a new customer in the application.
      *
      * @param newCustomer Data to use for the new customer.
      * @return The technical ID of the new user.
      * @throws ApplicationException When a problem is found during customer creation.
      */
     int createCustomer(CustomerCreationDto newCustomer) throws ApplicationException;
+
+    /**
+     * Updates a given customer.
+     *
+     * @param customerId ID of the customer to be updated.
+     * @param customer Customer data to use for the update.
+     * @throws ApplicationException When a problem is found during the update.
+     */
+    void updateCustomer(Integer customerId, CustomerUpdateDto customer) throws ApplicationException;
 
     /**
      * Deactivates an existing user.
