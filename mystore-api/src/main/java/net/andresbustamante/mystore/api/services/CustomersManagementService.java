@@ -1,8 +1,8 @@
 package net.andresbustamante.mystore.api.services;
 
 import net.andresbustamante.mystore.api.exceptions.ApplicationException;
-import net.andresbustamante.mystore.api.model.CustomerCreationDto;
-import net.andresbustamante.mystore.api.model.CustomerUpdateDto;
+import net.andresbustamante.mystore.api.model.CustomerCreation;
+import net.andresbustamante.mystore.api.model.CustomerUpdate;
 
 /**
  * Customers' management service.
@@ -16,7 +16,7 @@ public interface CustomersManagementService {
      * @return The technical ID of the new user.
      * @throws ApplicationException When a problem is found during customer creation.
      */
-    int createCustomer(CustomerCreationDto newCustomer) throws ApplicationException;
+    int createCustomer(CustomerCreation newCustomer) throws ApplicationException;
 
     /**
      * Updates a given customer.
@@ -25,7 +25,7 @@ public interface CustomersManagementService {
      * @param customer Customer data to use for the update.
      * @throws ApplicationException When a problem is found during the update.
      */
-    void updateCustomer(Integer customerId, CustomerUpdateDto customer) throws ApplicationException;
+    void updateCustomer(Integer customerId, CustomerUpdate customer) throws ApplicationException;
 
     /**
      * Deactivates an existing user.

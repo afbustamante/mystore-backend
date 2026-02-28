@@ -4,12 +4,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.extern.slf4j.Slf4j;
-import net.andresbustamante.mystore.api.model.AddressCreationDto;
+import net.andresbustamante.mystore.api.model.AddressCreation;
 import net.andresbustamante.mystore.api.services.AddressesManagementService;
-import net.andresbustamante.mystore.core.dao.AddressDao;
-import net.andresbustamante.mystore.core.dao.CityDao;
-import net.andresbustamante.mystore.core.entities.Address;
-import net.andresbustamante.mystore.core.entities.City;
+import net.andresbustamante.mystore.jpa.dao.AddressDao;
+import net.andresbustamante.mystore.jpa.dao.CityDao;
+import net.andresbustamante.mystore.jpa.entities.AddressEntity;
+import net.andresbustamante.mystore.jpa.entities.CityEntity;
 
 @Slf4j
 @Service
@@ -25,13 +25,13 @@ public class AddressesManagementServiceImpl implements AddressesManagementServic
 
     @Transactional
     @Override
-    public int createAddress(final AddressCreationDto address) {
-        Address newAddress = new Address();
+    public int createAddress(final AddressCreation address) {
+        AddressEntity newAddress = new AddressEntity();
         newAddress.setLine1(address.line1());
         newAddress.setLine2(address.line2());
         newAddress.setPostalCode(address.postalCode());
 
-        City city = cityDao.getReferenceById(address.cityId());
+        CityEntity city = cityDao.getReferenceById(address.cityId());
         newAddress.setCity(city);
 
         newAddress = addressDao.save(newAddress);

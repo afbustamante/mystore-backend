@@ -2,14 +2,14 @@ package net.andresbustamante.mystore.api.services;
 
 import java.util.Collection;
 
-import net.andresbustamante.mystore.api.model.CustomerDto;
+import net.andresbustamante.mystore.api.model.Customer;
 import net.andresbustamante.mystore.api.model.CustomerSearchCriteria;
-import net.andresbustamante.mystore.api.model.Page;
-import net.andresbustamante.mystore.api.model.PagingRequest;
+import net.andresbustamante.mystore.api.util.Page;
+import net.andresbustamante.mystore.api.util.PagingRequest;
 
 public interface CustomersSearchService {
 
-    Collection<CustomerDto> findCustomers(CustomerSearchCriteria criteria);
+    Collection<Customer> findCustomers(CustomerSearchCriteria criteria);
 
-    Page<CustomerDto> findCustomers(CustomerSearchCriteria criteria, PagingRequest pagingRequest);
+    Page<Customer> findCustomers(CustomerSearchCriteria criteria, PagingRequest pagingRequest);
 }

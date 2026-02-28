@@ -11,17 +11,17 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import net.andresbustamante.mystore.api.model.AddressCreationDto;
-import net.andresbustamante.mystore.api.model.CustomerCreationDto;
-import net.andresbustamante.mystore.api.model.UserCreationDto;
+import net.andresbustamante.mystore.api.model.AddressCreation;
+import net.andresbustamante.mystore.api.model.CustomerCreation;
+import net.andresbustamante.mystore.api.model.UserCreation;
 import net.andresbustamante.mystore.api.services.AddressesManagementService;
 import net.andresbustamante.mystore.api.services.UsersManagementService;
-import net.andresbustamante.mystore.core.dao.AddressDao;
-import net.andresbustamante.mystore.core.dao.CustomerDao;
-import net.andresbustamante.mystore.core.dao.UserDao;
-import net.andresbustamante.mystore.core.entities.Address;
-import net.andresbustamante.mystore.core.entities.Customer;
-import net.andresbustamante.mystore.core.entities.User;
+import net.andresbustamante.mystore.jpa.dao.AddressDao;
+import net.andresbustamante.mystore.jpa.dao.CustomerDao;
+import net.andresbustamante.mystore.jpa.dao.UserDao;
+import net.andresbustamante.mystore.jpa.entities.AddressEntity;
+import net.andresbustamante.mystore.jpa.entities.CustomerEntity;
+import net.andresbustamante.mystore.jpa.entities.UserEntity;
 
 @ExtendWith(MockitoExtension.class)
 class CustomersManagementServiceImplTest {
@@ -46,29 +46,29 @@ class CustomersManagementServiceImplTest {
 
     @Test
     void testCreateCustomer() throws Exception {
-        CustomerCreationDto customer = new CustomerCreationDto("Cristiano", "Ronaldo", "cr7@foot.pt",
+        CustomerCreation customer = new CustomerCreation("Cristiano", "Ronaldo", "cr7@foot.pt",
                 "01 23 45 67 89", "cr7", "password".getBytes(StandardCharsets.UTF_8), "123 Rue des Sports",
                 null, "12345", 1);
 
-        Customer storedCustomer = new Customer();
+        CustomerEntity storedCustomer = new CustomerEntity();
         storedCustomer.setId(1000);
-        when(customerDao.save(any(Customer.class))).thenReturn(storedCustomer);
+        when(customerDao.save(any(CustomerEntity.class))).thenReturn(storedCustomer);
 
-        Address storedAddress = new Address();
+        AddressEntity storedAddress = new AddressEntity();
         storedAddress.setId(2000);
-        when(addressesManagementService.createAddress(any(AddressCreationDto.class))).thenReturn(2000);
+        when(addressesManagementService.createAddress(any(AddressCreation.class))).thenReturn(2000);
         when(addressDao.getReferenceById(2000)).thenReturn(storedAddress);
 
-        User storedUser = new User();
+        UserEntity storedUser = new UserEntity();
         storedUser.setId(3000);
-        when(usersManagementService.createUser(any(UserCreationDto.class))).thenReturn(3000);
+        when(usersManagementService.createUser(any(UserCreation.class))).thenReturn(3000);
         when(userDao.getReferenceById(3000)).thenReturn(storedUser);
 
         int id = customersManagementService.createCustomer(customer);
 
         assertEquals(1000, id);
 
-        verify(addressesManagementService).createAddress(any(AddressCreationDto.class));
-        verify(usersManagementService).createUser(any(UserCreationDto.class));
+        verify(addressesManagementService).createAddress(any(AddressCreation.class));
+        verify(usersManagementService).createUser(any(UserCreation.class));
     }
 }

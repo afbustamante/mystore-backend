@@ -8,13 +8,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import net.andresbustamante.mystore.api.model.CityDto;
-import net.andresbustamante.mystore.api.model.CountryDto;
-import net.andresbustamante.mystore.api.model.Page;
-import net.andresbustamante.mystore.api.model.PagingRequest;
+import net.andresbustamante.mystore.api.model.City;
+import net.andresbustamante.mystore.api.model.Country;
+import net.andresbustamante.mystore.api.util.Page;
+import net.andresbustamante.mystore.api.util.PagingRequest;
 import net.andresbustamante.mystore.api.services.GeographySearchService;
 import net.andresbustamante.mystore.web.dto.v1.CityPage;
-import net.andresbustamante.mystore.web.dto.v1.Country;
+import net.andresbustamante.mystore.web.dto.v1.CountryDto;
 import net.andresbustamante.mystore.web.dto.v1.CountryPage;
 import net.andresbustamante.mystore.web.mappers.v1.CityDtoMapper;
 import net.andresbustamante.mystore.web.mappers.v1.CountryDtoMapper;
@@ -40,18 +40,18 @@ public class CountriesController extends AbstractController implements Countries
 
     @Override
     public ResponseEntity<CityPage> findCitiesByCountry(final Integer id, final Integer pageNumber, final Integer pageSize) {
-        Page<CityDto> cities = geographySearchService.findCitiesByCountry(id, PagingRequest.of(pageNumber, pageSize));
+        Page<City> cities = geographySearchService.findCitiesByCountry(id, PagingRequest.of(pageNumber, pageSize));
         return ResponseEntity.ok(cityDtoMapper.map(cities));
     }
 
     @Override
     public ResponseEntity<CountryPage> findCountries(final Integer pageNumber, final Integer pageSize) {
-        Page<CountryDto> countries = geographySearchService.findCountries(PagingRequest.of(pageNumber, pageSize));
+        Page<Country> countries = geographySearchService.findCountries(PagingRequest.of(pageNumber, pageSize));
         return ResponseEntity.ok(countryDtoMapper.map(countries));
     }
 
     @Override
-    public ResponseEntity<Country> findCountry(final Integer id) {
+    public ResponseEntity<CountryDto> findCountry(final Integer id) {
         return ResponseEntity.ok(countryDtoMapper.map(geographySearchService.findCountry(id)));
     }
 }

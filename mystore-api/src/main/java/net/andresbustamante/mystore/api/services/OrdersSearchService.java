@@ -2,14 +2,14 @@ package net.andresbustamante.mystore.api.services;
 
 import java.util.Collection;
 
-import net.andresbustamante.mystore.api.model.OrderDto;
+import net.andresbustamante.mystore.api.model.Order;
 import net.andresbustamante.mystore.api.model.OrderSearchCriteria;
-import net.andresbustamante.mystore.api.model.Page;
-import net.andresbustamante.mystore.api.model.PagingRequest;
+import net.andresbustamante.mystore.api.util.Page;
+import net.andresbustamante.mystore.api.util.PagingRequest;
 
 public interface OrdersSearchService {
 
-    Collection<OrderDto> findOrders(OrderSearchCriteria criteria);
+    Collection<Order> findOrders(OrderSearchCriteria criteria);
 
-    Page<OrderDto> findOrders(OrderSearchCriteria criteria, PagingRequest pagingRequest);
+    Page<Order> findOrders(OrderSearchCriteria criteria, PagingRequest pagingRequest);
 }

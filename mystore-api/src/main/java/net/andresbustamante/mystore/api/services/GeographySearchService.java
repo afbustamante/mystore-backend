@@ -2,20 +2,20 @@ package net.andresbustamante.mystore.api.services;
 
 import java.util.Collection;
 
-import net.andresbustamante.mystore.api.model.CityDto;
-import net.andresbustamante.mystore.api.model.CountryDto;
-import net.andresbustamante.mystore.api.model.Page;
-import net.andresbustamante.mystore.api.model.PagingRequest;
+import net.andresbustamante.mystore.api.model.City;
+import net.andresbustamante.mystore.api.model.Country;
+import net.andresbustamante.mystore.api.util.Page;
+import net.andresbustamante.mystore.api.util.PagingRequest;
 
 public interface GeographySearchService {
 
-    CountryDto findCountry(Integer countryId);
+    Country findCountry(Integer countryId);
 
-    Collection<CountryDto> findCountries();
+    Collection<Country> findCountries();
 
-    Page<CountryDto> findCountries(PagingRequest pagingRequest);
+    Page<Country> findCountries(PagingRequest pagingRequest);
 
-    Collection<CityDto> findCitiesByCountry(Integer countryId);
+    Collection<City> findCitiesByCountry(Integer countryId);
 
-    Page<CityDto> findCitiesByCountry(Integer countryId, PagingRequest pagingRequest);
+    Page<City> findCitiesByCountry(Integer countryId, PagingRequest pagingRequest);
 }

@@ -11,10 +11,10 @@ import lombok.extern.slf4j.Slf4j;
 import net.andresbustamante.mystore.api.exceptions.ApplicationException;
 import net.andresbustamante.mystore.api.exceptions.InvalidUsernameException;
 import net.andresbustamante.mystore.api.exceptions.ObjectNotFoundException;
-import net.andresbustamante.mystore.api.model.UserCreationDto;
+import net.andresbustamante.mystore.api.model.UserCreation;
 import net.andresbustamante.mystore.api.services.UsersManagementService;
-import net.andresbustamante.mystore.core.dao.UserDao;
-import net.andresbustamante.mystore.core.entities.User;
+import net.andresbustamante.mystore.jpa.dao.UserDao;
+import net.andresbustamante.mystore.jpa.entities.UserEntity;
 
 @Slf4j
 @Service
@@ -30,12 +30,12 @@ public class UsersManagementServiceImpl implements UsersManagementService {
 
     @Override
     @Transactional(rollbackFor = ApplicationException.class)
-    public int createUser(@NonNull final UserCreationDto user) throws ApplicationException {
+    public int createUser(@NonNull final UserCreation user) throws ApplicationException {
         if (userDao.existsByUsername(user.username().toLowerCase(Locale.getDefault()))) {
             throw new InvalidUsernameException("A user already exists with the given username");
         }
 
-        User newUser = new User();
+        UserEntity newUser = new UserEntity();
         newUser.setUsername(user.username().toLowerCase(Locale.getDefault()));
         newUser.setPassword(passwordEncoder.encode(user.password()));
 
@@ -49,7 +49,7 @@ public class UsersManagementServiceImpl implements UsersManagementService {
     @Override
     @Transactional(rollbackFor = ApplicationException.class)
     public void deactivateUser(@NonNull final Integer userId) throws ApplicationException {
-        User user = userDao.findById(userId).orElseThrow(() -> new ObjectNotFoundException("User not found"));
+        UserEntity user = userDao.findById(userId).orElseThrow(() -> new ObjectNotFoundException("User not found"));
         userDao.delete(user); // Hibernate makes a soft-delete here
 
         log.info("User {} has been deactivated", user.getUsername());

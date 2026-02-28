@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import net.andresbustamante.mystore.api.model.OrderDto;
+import net.andresbustamante.mystore.api.model.Order;
 import net.andresbustamante.mystore.api.model.OrderSearchCriteria;
-import net.andresbustamante.mystore.api.model.Page;
-import net.andresbustamante.mystore.api.model.PagingRequest;
+import net.andresbustamante.mystore.api.util.Page;
+import net.andresbustamante.mystore.api.util.PagingRequest;
 import net.andresbustamante.mystore.api.services.OrdersSearchService;
 import net.andresbustamante.mystore.web.dto.v1.OrderPage;
 import net.andresbustamante.mystore.web.mappers.v1.OrderDtoMapper;
@@ -41,7 +41,7 @@ public class OrdersController extends AbstractController implements OrdersApi {
                 .dateMax(LocalDate.parse("2009-01-31"))
                 .build();
 
-        Page<OrderDto> orders = ordersSearchService.findOrders(criteria, PagingRequest.of(pageNumber, pageSize));
+        Page<Order> orders = ordersSearchService.findOrders(criteria, PagingRequest.of(pageNumber, pageSize));
         return ResponseEntity.ok(orderDtoMapper.map(orders));
     }
 }

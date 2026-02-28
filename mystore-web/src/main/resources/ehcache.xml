@@ -11,15 +11,15 @@
         </resources>
     </cache-template>
 
-    <cache alias="net.andresbustamante.mystore.core.entities.Country"
+    <cache alias="net.andresbustamante.mystore.jpa.entities.CountryEntity"
            uses-template="ref-entities">
     </cache>
 
-    <cache alias="net.andresbustamante.mystore.core.entities.City"
+    <cache alias="net.andresbustamante.mystore.jpa.entities.CityEntity"
            uses-template="ref-entities">
     </cache>
 
-    <cache alias="net.andresbustamante.mystore.core.entities.Category"
+    <cache alias="net.andresbustamante.mystore.jpa.entities.CategoryEntity"
            uses-template="ref-entities">
     </cache>
 

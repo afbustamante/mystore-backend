@@ -15,15 +15,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import net.andresbustamante.mystore.api.exceptions.ApplicationException;
 import net.andresbustamante.mystore.api.exceptions.FunctionalException;
-import net.andresbustamante.mystore.api.model.CustomerCreationDto;
-import net.andresbustamante.mystore.api.model.CustomerDto;
+import net.andresbustamante.mystore.api.model.CustomerCreation;
+import net.andresbustamante.mystore.api.model.Customer;
 import net.andresbustamante.mystore.api.model.CustomerSearchCriteria;
-import net.andresbustamante.mystore.api.model.CustomerUpdateDto;
-import net.andresbustamante.mystore.api.model.Page;
-import net.andresbustamante.mystore.api.model.PagingRequest;
+import net.andresbustamante.mystore.api.model.CustomerUpdate;
+import net.andresbustamante.mystore.api.util.Page;
+import net.andresbustamante.mystore.api.util.PagingRequest;
 import net.andresbustamante.mystore.api.services.CustomersManagementService;
 import net.andresbustamante.mystore.api.services.CustomersSearchService;
-import net.andresbustamante.mystore.web.dto.v1.Customer;
+import net.andresbustamante.mystore.web.dto.v1.CustomerDto;
 import net.andresbustamante.mystore.web.dto.v1.CustomerForm;
 import net.andresbustamante.mystore.web.dto.v1.CustomerPage;
 import net.andresbustamante.mystore.web.mappers.v1.CustomerDtoMapper;
@@ -49,7 +49,7 @@ public class CustomersController extends AbstractController implements Customers
 
     @Override
     public ResponseEntity<Void> createCustomer(final CustomerForm body) {
-        CustomerCreationDto customer = new CustomerCreationDto(
+        CustomerCreation customer = new CustomerCreation(
                 body.getFirstName(), body.getLastName(), body.getEmail(), body.getPhoneNumber(),
                 body.getUsername(), body.getPassword(), body.getAddressLine1(), body.getAddressLine2(),
                 body.getPostalCode(), body.getCityId()
@@ -68,7 +68,7 @@ public class CustomersController extends AbstractController implements Customers
 
     @Override
     public ResponseEntity<CustomerForm> updateCustomer(final Integer id, final CustomerForm body) {
-        CustomerUpdateDto customer = new CustomerUpdateDto(
+        CustomerUpdate customer = new CustomerUpdate(
                 body.getFirstName(), body.getLastName(), body.getEmail(), body.getPhoneNumber()
         );
 
@@ -84,7 +84,7 @@ public class CustomersController extends AbstractController implements Customers
     }
 
     @Override
-    public ResponseEntity<Customer> findCustomer(final Integer id) {
+    public ResponseEntity<CustomerDto> findCustomer(final Integer id) {
         // TODO Implement this method
         throw new ResponseStatusException(NOT_IMPLEMENTED);
     }
@@ -94,14 +94,14 @@ public class CustomersController extends AbstractController implements Customers
         CustomerSearchCriteria criteria = CustomerSearchCriteria.builder()
                 .country("France")
                 .build();
-        Page<CustomerDto> customers = customersSearchService.findCustomers(criteria,
+        Page<Customer> customers = customersSearchService.findCustomers(criteria,
                 PagingRequest.of(pageNumber, pageSize));
 
         return ResponseEntity.ok(customerDtoMapper.map(customers));
     }
 
     @Override
-    public ResponseEntity<Customer> deactivateCustomer(final Integer customerId) {
+    public ResponseEntity<CustomerDto> deactivateCustomer(final Integer customerId) {
         try {
             customersManagementService.deactivateCustomer(customerId);
             return ResponseEntity.noContent().build();

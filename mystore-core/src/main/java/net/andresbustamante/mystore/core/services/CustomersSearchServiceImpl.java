@@ -8,37 +8,37 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import net.andresbustamante.mystore.api.model.CustomerDto;
+import net.andresbustamante.mystore.api.model.Customer;
 import net.andresbustamante.mystore.api.model.CustomerSearchCriteria;
-import net.andresbustamante.mystore.api.model.Page;
-import net.andresbustamante.mystore.api.model.PagingRequest;
+import net.andresbustamante.mystore.api.util.Page;
+import net.andresbustamante.mystore.api.util.PagingRequest;
 import net.andresbustamante.mystore.api.services.CustomersSearchService;
-import net.andresbustamante.mystore.core.dao.CustomerDao;
-import net.andresbustamante.mystore.core.entities.Customer;
-import net.andresbustamante.mystore.core.mappers.CustomerMapper;
+import net.andresbustamante.mystore.jpa.dao.CustomerDao;
+import net.andresbustamante.mystore.jpa.entities.CustomerEntity;
+import net.andresbustamante.mystore.jpa.mappers.CustomerEntityMapper;
 
 @Service
 @Transactional(readOnly = true)
 public class CustomersSearchServiceImpl implements CustomersSearchService {
 
     private final CustomerDao customerDao;
-    private final CustomerMapper customerMapper;
+    private final CustomerEntityMapper customerEntityMapper;
 
-    public CustomersSearchServiceImpl(final CustomerDao customerDao, final CustomerMapper customerMapper) {
+    public CustomersSearchServiceImpl(final CustomerDao customerDao, final CustomerEntityMapper customerEntityMapper) {
         this.customerDao = customerDao;
-        this.customerMapper = customerMapper;
+        this.customerEntityMapper = customerEntityMapper;
     }
 
     @Override
-    public Collection<CustomerDto> findCustomers(final CustomerSearchCriteria criteria) {
-        List<Customer> customers = customerDao.findAllByCountry(criteria.getCountry());
-        return customerMapper.map(customers);
+    public Collection<Customer> findCustomers(final CustomerSearchCriteria criteria) {
+        List<CustomerEntity> customers = customerDao.findAllByCountry(criteria.getCountry());
+        return customerEntityMapper.map(customers);
     }
 
     @Override
-    public Page<CustomerDto> findCustomers(final CustomerSearchCriteria criteria, PagingRequest pagingRequest) {
+    public Page<Customer> findCustomers(final CustomerSearchCriteria criteria, PagingRequest pagingRequest) {
         var customers = customerDao.findAllByCountry(criteria.getCountry(),
                 PageRequest.of(pagingRequest.pageNumber(), pagingRequest.pageSize(), Sort.by("id").descending()));
-        return customerMapper.map(customers);
+        return customerEntityMapper.map(customers);
     }
 }

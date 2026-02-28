@@ -1,0 +1,52 @@
+package net.andresbustamante.mystore.jpa.entities;
+
+import java.io.Serializable;
+import java.util.Objects;
+
+import jakarta.persistence.Cacheable;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
+
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Immutable;
+
+import lombok.Getter;
+import lombok.Setter;
+
+@Entity
+@Table(name = "categories", uniqueConstraints = @UniqueConstraint(name = "uc_category_name", columnNames = "name"))
+@Cacheable
+@Cache(usage = CacheConcurrencyStrategy.READ_ONLY, region = "categories")
+@Immutable
+@Getter
+@Setter
+public class CategoryEntity implements Serializable {
+
+    @Id
+    @Column(name = "category_id", nullable = false)
+    private Short id;
+
+    @Column(name = "name", nullable = false)
+    private String name;
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        CategoryEntity category = (CategoryEntity) o;
+        return Objects.equals(name, category.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
+    }
+}

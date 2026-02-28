@@ -10,7 +10,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
 @ComponentScan(basePackages = "net.andresbustamante.mystore")
-@EntityScan(basePackages = "net.andresbustamante.mystore.core.entities")
+@EntityScan(basePackages = "net.andresbustamante.mystore.jpa.entities")
 @EnableScheduling
 @EnableAsync
 @EnableCaching

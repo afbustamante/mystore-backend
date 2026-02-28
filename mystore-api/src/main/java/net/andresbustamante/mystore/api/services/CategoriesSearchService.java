@@ -2,13 +2,13 @@ package net.andresbustamante.mystore.api.services;
 
 import java.util.Collection;
 
-import net.andresbustamante.mystore.api.model.CategoryDto;
-import net.andresbustamante.mystore.api.model.Page;
-import net.andresbustamante.mystore.api.model.PagingRequest;
+import net.andresbustamante.mystore.api.model.Category;
+import net.andresbustamante.mystore.api.util.Page;
+import net.andresbustamante.mystore.api.util.PagingRequest;
 
 public interface CategoriesSearchService {
 
-    Collection<CategoryDto> findCategories();
+    Collection<Category> findCategories();
 
-    Page<CategoryDto> findCategories(PagingRequest pagingRequest);
+    Page<Category> findCategories(PagingRequest pagingRequest);
 }

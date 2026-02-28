@@ -5,12 +5,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
-@EnableJpaRepositories(value = "net.andresbustamante.mystore.core.dao")
+@EnableJpaRepositories(value = "net.andresbustamante.mystore.jpa.dao")
 @EnableJpaAuditing(auditorAwareRef = "auditorAware", modifyOnCreate = false)
-@EnableTransactionManagement
 public class JpaConfig {
 
     @Bean

@@ -11,19 +11,19 @@ import lombok.extern.slf4j.Slf4j;
 import net.andresbustamante.mystore.api.exceptions.ApplicationException;
 import net.andresbustamante.mystore.api.exceptions.InvalidEmailException;
 import net.andresbustamante.mystore.api.exceptions.ObjectNotFoundException;
-import net.andresbustamante.mystore.api.model.AddressCreationDto;
-import net.andresbustamante.mystore.api.model.CustomerCreationDto;
-import net.andresbustamante.mystore.api.model.CustomerUpdateDto;
-import net.andresbustamante.mystore.api.model.UserCreationDto;
+import net.andresbustamante.mystore.api.model.AddressCreation;
+import net.andresbustamante.mystore.api.model.CustomerCreation;
+import net.andresbustamante.mystore.api.model.CustomerUpdate;
+import net.andresbustamante.mystore.api.model.UserCreation;
 import net.andresbustamante.mystore.api.services.AddressesManagementService;
 import net.andresbustamante.mystore.api.services.CustomersManagementService;
 import net.andresbustamante.mystore.api.services.UsersManagementService;
-import net.andresbustamante.mystore.core.dao.AddressDao;
-import net.andresbustamante.mystore.core.dao.CustomerDao;
-import net.andresbustamante.mystore.core.dao.UserDao;
-import net.andresbustamante.mystore.core.entities.Address;
-import net.andresbustamante.mystore.core.entities.Customer;
-import net.andresbustamante.mystore.core.entities.User;
+import net.andresbustamante.mystore.jpa.dao.AddressDao;
+import net.andresbustamante.mystore.jpa.dao.CustomerDao;
+import net.andresbustamante.mystore.jpa.dao.UserDao;
+import net.andresbustamante.mystore.jpa.entities.AddressEntity;
+import net.andresbustamante.mystore.jpa.entities.CustomerEntity;
+import net.andresbustamante.mystore.jpa.entities.UserEntity;
 
 @Slf4j
 @Service
@@ -47,12 +47,12 @@ public class CustomersManagementServiceImpl implements CustomersManagementServic
 
     @Override
     @Transactional(rollbackFor = ApplicationException.class)
-    public int createCustomer(@NonNull final CustomerCreationDto newCustomer) throws ApplicationException {
+    public int createCustomer(@NonNull final CustomerCreation newCustomer) throws ApplicationException {
         if (customerDao.existsByEmail(newCustomer.email().toLowerCase(Locale.getDefault()))) {
             throw new InvalidEmailException("A customer already exists for the given email address");
         }
 
-        Customer customer = new Customer();
+        CustomerEntity customer = new CustomerEntity();
         customer.setFirstName(newCustomer.firstName());
         customer.setLastName(newCustomer.lastName());
         customer.setEmail(newCustomer.email().toLowerCase(Locale.getDefault()));
@@ -70,7 +70,7 @@ public class CustomersManagementServiceImpl implements CustomersManagementServic
     @Override
     @Transactional(rollbackFor = ApplicationException.class)
     public void deactivateCustomer(@NonNull final Integer customerId) throws ApplicationException {
-        Customer customer = customerDao.findById(customerId).orElseThrow(
+        CustomerEntity customer = customerDao.findById(customerId).orElseThrow(
                 () -> new ObjectNotFoundException(String.format("Customer not found with the given ID: %d", customerId)));
 
         // Also deactivate the user to avoid any authentication attempt
@@ -82,8 +82,8 @@ public class CustomersManagementServiceImpl implements CustomersManagementServic
 
     @Override
     @Transactional(rollbackFor = ApplicationException.class)
-    public void updateCustomer(final Integer customerId, final CustomerUpdateDto newCustomer) throws ApplicationException {
-        Customer customer = customerDao.findById(customerId).orElseThrow();
+    public void updateCustomer(final Integer customerId, final CustomerUpdate newCustomer) throws ApplicationException {
+        CustomerEntity customer = customerDao.findById(customerId).orElseThrow();
 
         customer.setFirstName(newCustomer.firstName());
         customer.setLastName(newCustomer.lastName());
@@ -95,14 +95,14 @@ public class CustomersManagementServiceImpl implements CustomersManagementServic
         log.info("The customer {} has been successfully updated", customerId);
     }
 
-    private User createUserForCustomer(final CustomerCreationDto newCustomer) throws ApplicationException {
-        int userId = usersManagementService.createUser(new UserCreationDto(newCustomer.username(),
+    private UserEntity createUserForCustomer(final CustomerCreation newCustomer) throws ApplicationException {
+        int userId = usersManagementService.createUser(new UserCreation(newCustomer.username(),
                 new String(newCustomer.password(),StandardCharsets.UTF_8)));
         return userDao.getReferenceById(userId);
     }
 
-    private Address createAddressForCustomer(final CustomerCreationDto newCustomer) throws ApplicationException {
-        AddressCreationDto newAddress = new AddressCreationDto(
+    private AddressEntity createAddressForCustomer(final CustomerCreation newCustomer) throws ApplicationException {
+        AddressCreation newAddress = new AddressCreation(
                 newCustomer.addressLine1(), newCustomer.addressLine2(),
                 newCustomer.postalCode(), newCustomer.cityId());
 

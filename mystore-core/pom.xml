@@ -26,10 +26,19 @@
       <version>${project.version}</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>net.andresbustamante</groupId>
+      <artifactId>mystore-jpa</artifactId>
+      <version>${project.version}</version>
+    </dependency>
 
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-context</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-core</artifactId>
     </dependency>
     <dependency>
       <groupId>org.springframework</groupId>
@@ -63,6 +72,10 @@
       <groupId>org.springframework.data</groupId>
       <artifactId>spring-data-jpa</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.springframework.data</groupId>
+      <artifactId>spring-data-commons</artifactId>
+    </dependency>
     <!--
     <dependency>
       <groupId>org.springframework.data</groupId>
@@ -75,15 +88,6 @@
     </dependency>
 
     <dependency>
-      <groupId>jakarta.persistence</groupId>
-      <artifactId>jakarta.persistence-api</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>jakarta.validation</groupId>
-      <artifactId>jakarta.validation-api</artifactId>
-    </dependency>
-
-    <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-lang3</artifactId>
     </dependency>
@@ -93,21 +97,6 @@
       <artifactId>lombok</artifactId>
       <scope>provided</scope>
     </dependency>
-    <dependency>
-      <groupId>org.mapstruct</groupId>
-      <artifactId>mapstruct</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.hibernate.orm</groupId>
-      <artifactId>hibernate-core</artifactId>
-    </dependency>
-    <!--
-    <dependency>
-      <groupId>org.hibernate.orm</groupId>
-      <artifactId>hibernate-envers</artifactId>
-    </dependency>
-    -->
 
     <dependency>
       <groupId>org.slf4j</groupId>
@@ -127,6 +116,16 @@
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-api</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-core</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-junit-jupiter</artifactId>
       <scope>test</scope>
     </dependency>
   </dependencies>
