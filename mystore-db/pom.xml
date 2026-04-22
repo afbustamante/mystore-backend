@@ -8,7 +8,7 @@
   </parent>
 
   <artifactId>mystore-db</artifactId>
-  <name>My Store - Database definition</name>
+  <name>My Store - Database configuration</name>
   <description>Libraries and migration files to use to build the database on a database server using Flyway</description>
 
   <properties>

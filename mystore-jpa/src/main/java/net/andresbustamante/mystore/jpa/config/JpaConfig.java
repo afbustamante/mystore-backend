@@ -1,4 +1,4 @@
-package net.andresbustamante.mystore.core.config;
+package net.andresbustamante.mystore.jpa.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,4 +1,4 @@
-package net.andresbustamante.mystore.web;
+package net.andresbustamante.mystore;
 
 import static org.junit.jupiter.api.Assertions.*;
 

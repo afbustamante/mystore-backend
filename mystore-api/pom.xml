@@ -8,7 +8,7 @@
   </parent>
 
   <artifactId>mystore-api</artifactId>
-  <name>My Store - API definition</name>
+  <name>My Store - Core API definition</name>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

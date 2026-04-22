@@ -15,6 +15,7 @@
     <module>mystore-core</module>
     <module>mystore-web</module>
     <module>mystore-jpa</module>
+    <module>mystore-app</module>
   </modules>
 
   <properties>
