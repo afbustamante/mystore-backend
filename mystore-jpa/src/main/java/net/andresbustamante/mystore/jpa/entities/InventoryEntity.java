@@ -1,7 +1,5 @@
 package net.andresbustamante.mystore.jpa.entities;
 
-import java.io.Serializable;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -12,6 +10,7 @@ import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,7 +18,7 @@ import lombok.Setter;
 @Table(name = "inventory")
 @Getter
 @Setter
-public class InventoryEntity implements Serializable {
+public class InventoryEntity extends AuditableEntity {
 
     @Id
     @Column(name = "product_id", nullable = false)

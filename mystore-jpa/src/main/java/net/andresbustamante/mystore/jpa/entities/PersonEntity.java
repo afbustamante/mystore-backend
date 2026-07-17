@@ -1,6 +1,5 @@
 package net.andresbustamante.mystore.jpa.entities;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 
 import jakarta.persistence.Column;
@@ -20,7 +19,7 @@ import net.andresbustamante.mystore.jpa.util.GenderConverter;
 @MappedSuperclass
 @Getter
 @Setter
-public class PersonEntity implements Serializable {
+public class PersonEntity extends AuditableEntity {
 
     @Size(max = 50)
     @NotNull

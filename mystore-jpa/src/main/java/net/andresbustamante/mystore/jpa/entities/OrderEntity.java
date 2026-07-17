@@ -1,6 +1,5 @@
 package net.andresbustamante.mystore.jpa.entities;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
@@ -24,7 +23,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "orders")
-public class OrderEntity implements Serializable {
+public class OrderEntity extends AuditableEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

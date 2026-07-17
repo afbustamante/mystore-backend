@@ -1,9 +1,6 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns="http://www.ehcache.org/v3"
-        xmlns:jsr107="http://www.ehcache.org/v3/jsr107"
-        xsi:schemaLocation="
-            http://www.ehcache.org/v3 http://www.ehcache.org/schema/ehcache-core-3.0.xsd
-            http://www.ehcache.org/v3/jsr107 http://www.ehcache.org/schema/ehcache-107-ext-3.0.xsd">
+        xsi:schemaLocation="http://www.ehcache.org/v3 http://www.ehcache.org/schema/ehcache-core-3.0.xsd">
 
     <cache-template name="ref-entities">
         <resources>
@@ -11,16 +8,8 @@
         </resources>
     </cache-template>
 
-    <cache alias="net.andresbustamante.mystore.jpa.entities.CountryEntity"
-           uses-template="ref-entities">
-    </cache>
-
-    <cache alias="net.andresbustamante.mystore.jpa.entities.CityEntity"
-           uses-template="ref-entities">
-    </cache>
-
-    <cache alias="net.andresbustamante.mystore.jpa.entities.CategoryEntity"
-           uses-template="ref-entities">
-    </cache>
+    <cache alias="countries" uses-template="ref-entities"/>
+    <cache alias="cities" uses-template="ref-entities" />
+    <cache alias="categories" uses-template="ref-entities" />
 
 </config>

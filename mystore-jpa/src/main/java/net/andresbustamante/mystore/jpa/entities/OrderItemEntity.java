@@ -1,6 +1,5 @@
 package net.andresbustamante.mystore.jpa.entities;
 
-import java.io.Serializable;
 import java.util.Objects;
 
 import jakarta.persistence.Column;
@@ -13,6 +12,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,7 +20,7 @@ import lombok.Setter;
 @Table(name = "order_items")
 @Getter
 @Setter
-public class OrderItemEntity implements Serializable, Comparable<OrderItemEntity> {
+public class OrderItemEntity extends AuditableEntity implements Comparable<OrderItemEntity> {
 
     @EmbeddedId
     private OrderItemId id;

@@ -1,6 +1,5 @@
 package net.andresbustamante.mystore.jpa.entities;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 
 import jakarta.persistence.Column;
@@ -23,7 +22,7 @@ import lombok.Setter;
 @Table(name = "products")
 @Getter
 @Setter
-public class ProductEntity implements Serializable {
+public class ProductEntity extends AuditableEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
