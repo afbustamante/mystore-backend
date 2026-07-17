@@ -1,7 +1,5 @@
 package net.andresbustamante.mystore.jpa.entities;
 
-import java.io.Serializable;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -23,7 +21,7 @@ import lombok.Setter;
 @SoftDelete(strategy = SoftDeleteType.ACTIVE, columnName = "active")
 @Getter
 @Setter
-public class UserEntity implements Serializable {
+public class UserEntity extends AuditableEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
