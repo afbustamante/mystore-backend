@@ -11,7 +11,7 @@ RETURNS SETOF PRODUCTS
 LANGUAGE plpgsql
 AS $$
 BEGIN
-    RETURN QUERY SELECT * FROM PRODUCTS WHERE CATEGORY_ID=category_in AND SPECIAL=1 LIMIT batch_size_in;
+    RETURN QUERY SELECT * FROM PRODUCTS WHERE CATEGORY_ID = category_in AND SPECIAL IS TRUE LIMIT batch_size_in;
     RETURN;
 END;
 $$;
@@ -27,7 +27,13 @@ DECLARE
   vector_in TEXT;
 BEGIN
     vector_in := replace(trim(both from title_in), ' ','&');
-    RETURN QUERY SELECT * FROM PRODUCTS WHERE to_tsvector('simple',ACTOR) @@ to_tsquery(vector_in) LIMIT batch_size_in;
+    RETURN QUERY SELECT * FROM PRODUCTS WHERE to_tsvector('simple', title) @@ to_tsquery(vector_in) LIMIT batch_size_in;
     RETURN;
 END;
 $$;
+
+-- Drop old functions
+DROP FUNCTION IF EXISTS browse_by_actor;
+DROP FUNCTION IF EXISTS login;
+DROP FUNCTION IF EXISTS new_customer;
+DROP FUNCTION IF EXISTS purchase;

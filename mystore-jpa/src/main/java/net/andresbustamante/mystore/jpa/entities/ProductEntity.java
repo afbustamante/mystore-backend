@@ -40,7 +40,8 @@ public class ProductEntity extends AuditableEntity {
     @NotNull
     private BigDecimal price;
 
-    private Short special;
+    @NotNull
+    private boolean special;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
