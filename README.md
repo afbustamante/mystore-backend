@@ -4,11 +4,11 @@ Spring Boot and Spring Data JPA project based on [Dell DVD Store Database](https
 
 This project uses:
 
-- Spring Boot 3.4
-- Spring Data JPA 3.4
+- Spring Boot 3.5
+- Spring Data JPA 3.5
 - Spring Framework 6.2
-- Flyway 11.8
-- Embedded H2 Database 2.3
+- Flyway 11.20
+- Embedded H2 Database 2.4
 - Built-on Maven
 
 It requires Java 17+ and optionally a PostgreSQL Server 14+ in order to deploy the application with a
