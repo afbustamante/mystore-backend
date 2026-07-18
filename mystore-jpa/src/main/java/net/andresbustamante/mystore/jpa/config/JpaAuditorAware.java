@@ -4,8 +4,8 @@ import java.util.Optional;
 
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.lang.NonNull;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+
+import net.andresbustamante.mystore.api.util.UserContextHolder;
 
 public class JpaAuditorAware implements AuditorAware<String> {
 
@@ -13,8 +13,6 @@ public class JpaAuditorAware implements AuditorAware<String> {
 
     @Override
     public @NonNull Optional<String> getCurrentAuditor() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return authentication != null && authentication.isAuthenticated()
-                ? Optional.of(authentication.getName()) : Optional.of(DEFAULT_USERNAME);
+        return UserContextHolder.getUserContext() != null ? Optional.of(UserContextHolder.getUserContext().getUsername()) : Optional.of(DEFAULT_USERNAME);
     }
 }

@@ -58,7 +58,7 @@ public class CustomersController extends AbstractController implements Customers
         );
 
         try {
-            int id = customersManagementService.createCustomer(customer, getUserContext());
+            int id = customersManagementService.createCustomer(customer);
 
             return ResponseEntity.created(URI.create(String.format("/api/v1/customers/%d", id))).build();
         } catch (FunctionalException e) {
@@ -75,7 +75,7 @@ public class CustomersController extends AbstractController implements Customers
         );
 
         try {
-            customersManagementService.updateCustomer(id, customer, getUserContext());
+            customersManagementService.updateCustomer(id, customer);
 
             return ResponseEntity.accepted().build();
         } catch (SecurityException e) {
@@ -109,7 +109,7 @@ public class CustomersController extends AbstractController implements Customers
     @Override
     public ResponseEntity<CustomerDto> deactivateCustomer(final Integer customerId) {
         try {
-            customersManagementService.deactivateCustomer(customerId, getUserContext());
+            customersManagementService.deactivateCustomer(customerId);
             return ResponseEntity.noContent().build();
         } catch (SecurityException e) {
             throw new ResponseStatusException(FORBIDDEN, "Not allowed to deactivate this customer", e);

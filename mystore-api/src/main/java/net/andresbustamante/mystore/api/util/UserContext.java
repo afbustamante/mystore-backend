@@ -35,4 +35,21 @@ public class UserContext {
         Objects.requireNonNull(username, "Username cannot be null");
         this.username = username;
     }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        UserContext context = (UserContext) o;
+        return Objects.equals(username, context.username);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(username);
+    }
 }

@@ -62,6 +62,7 @@
     <commons-lang.version>3.20.0</commons-lang.version>
     <commons-collections.version>4.5.0</commons-collections.version>
 
+    <aspectjweaver.version>1.9.24</aspectjweaver.version>
     <ehcache.version>3.12.0</ehcache.version>
     <flyway.version>11.20.3</flyway.version>
     <h2.version>2.4.240</h2.version>
@@ -340,6 +341,11 @@
         <groupId>org.openapitools</groupId>
         <artifactId>jackson-databind-nullable</artifactId>
         <version>${jackson-databind-nullable.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.aspectj</groupId>
+        <artifactId>aspectjweaver</artifactId>
+        <version>${aspectjweaver.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>

@@ -20,6 +20,7 @@ import net.andresbustamante.mystore.api.services.AddressesManagementService;
 import net.andresbustamante.mystore.api.services.CustomersManagementService;
 import net.andresbustamante.mystore.api.services.UsersManagementService;
 import net.andresbustamante.mystore.api.util.UserContext;
+import net.andresbustamante.mystore.api.util.UserContextHolder;
 import net.andresbustamante.mystore.jpa.dao.AddressDao;
 import net.andresbustamante.mystore.jpa.dao.CustomerDao;
 import net.andresbustamante.mystore.jpa.dao.UserDao;
@@ -49,7 +50,7 @@ public class CustomersManagementServiceImpl implements CustomersManagementServic
 
     @Override
     @Transactional(rollbackFor = ApplicationException.class)
-    public int createCustomer(@NonNull final CustomerCreation newCustomer, final UserContext ctx) throws ApplicationException {
+    public int createCustomer(@NonNull final CustomerCreation newCustomer) throws ApplicationException {
         if (customerDao.existsByEmail(newCustomer.email().toLowerCase(Locale.getDefault()))) {
             throw new InvalidEmailException("A customer already exists for the given email address");
         }
@@ -58,8 +59,8 @@ public class CustomersManagementServiceImpl implements CustomersManagementServic
         customer.setFirstName(newCustomer.firstName());
         customer.setLastName(newCustomer.lastName());
         customer.setEmail(newCustomer.email().toLowerCase(Locale.getDefault()));
-        customer.setAddress(createAddressForCustomer(newCustomer, ctx));
-        customer.setUser(createUserForCustomer(newCustomer, ctx));
+        customer.setAddress(createAddressForCustomer(newCustomer));
+        customer.setUser(createUserForCustomer(newCustomer));
 
         customer = customerDao.save(customer);
 
@@ -71,17 +72,19 @@ public class CustomersManagementServiceImpl implements CustomersManagementServic
 
     @Override
     @Transactional(rollbackFor = ApplicationException.class)
-    public void deactivateCustomer(@NonNull final Integer customerId, final UserContext ctx) throws ApplicationException {
+    public void deactivateCustomer(@NonNull final Integer customerId) throws ApplicationException {
         CustomerEntity customer = customerDao.findById(customerId).orElseThrow(
                 () -> new ObjectNotFoundException(String.format("Customer not found with the given ID: %d", customerId)));
 
-        if (!ctx.getUsername().equals(customer.getUser().getUsername())) {
+        UserContext ctx = UserContextHolder.getUserContext();
+
+        if (ctx == null || !ctx.getUsername().equals(customer.getUser().getUsername())) {
             // Only the same user can update himself
             throw new AccessDeniedException("You cannot update this user");
         }
 
         // Also deactivate the user to avoid any authentication attempt
-        usersManagementService.deactivateUser(customer.getUser().getId(), ctx);
+        usersManagementService.deactivateUser(customer.getUser().getId());
         customerDao.delete(customer); // Hibernate makes a soft-delete here
 
         log.info("Customer {} has been deactivated", customerId);
@@ -89,11 +92,13 @@ public class CustomersManagementServiceImpl implements CustomersManagementServic
 
     @Override
     @Transactional(rollbackFor = ApplicationException.class)
-    public void updateCustomer(final Integer customerId, final CustomerUpdate newCustomer, final UserContext ctx)
+    public void updateCustomer(final Integer customerId, final CustomerUpdate newCustomer)
             throws ApplicationException {
         CustomerEntity customer = customerDao.findById(customerId).orElseThrow();
 
-        if (!ctx.getUsername().equals(customer.getUser().getUsername())) {
+        UserContext ctx = UserContextHolder.getUserContext();
+
+        if (ctx == null || !ctx.getUsername().equals(customer.getUser().getUsername())) {
             // Only the same user can update himself
             throw new AccessDeniedException("You cannot update this user");
         }
@@ -108,20 +113,20 @@ public class CustomersManagementServiceImpl implements CustomersManagementServic
         log.info("The customer {} has been successfully updated", customerId);
     }
 
-    private UserEntity createUserForCustomer(final CustomerCreation newCustomer, final UserContext ctx)
+    private UserEntity createUserForCustomer(final CustomerCreation newCustomer)
             throws ApplicationException {
         int userId = usersManagementService.createUser(new UserCreation(newCustomer.username(),
-                new String(newCustomer.password(),StandardCharsets.UTF_8)), ctx);
+                new String(newCustomer.password(),StandardCharsets.UTF_8)));
         return userDao.getReferenceById(userId);
     }
 
-    private AddressEntity createAddressForCustomer(final CustomerCreation newCustomer, final UserContext ctx)
+    private AddressEntity createAddressForCustomer(final CustomerCreation newCustomer)
             throws ApplicationException {
         AddressCreation newAddress = new AddressCreation(
                 newCustomer.addressLine1(), newCustomer.addressLine2(),
                 newCustomer.postalCode(), newCustomer.cityId());
 
-        int addressId = addressesManagementService.createAddress(newAddress, ctx);
+        int addressId = addressesManagementService.createAddress(newAddress);
 
         return addressDao.getReferenceById(addressId);
     }
