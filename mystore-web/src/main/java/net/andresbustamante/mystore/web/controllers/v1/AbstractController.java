@@ -4,7 +4,12 @@ import java.util.Optional;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import net.andresbustamante.mystore.api.util.UserContext;
 
 public abstract class AbstractController {
 
@@ -22,5 +27,11 @@ public abstract class AbstractController {
 
     public Optional<HttpServletRequest> getRequest() {
         return Optional.of(request);
+    }
+
+    public UserContext getUserContext() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return authentication != null && authentication.isAuthenticated()
+                ? new UserContext(authentication.getName()) : UserContext.UNKNOWN_USER;
     }
 }

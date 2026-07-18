@@ -39,13 +39,13 @@ paths:
             minimum: 0
             default: 10
       responses:
-        200:
+        '200':
           description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/CategoryPage'
-        500:
+        '500':
           description: Internal server error
           content:
             application/json:
@@ -74,13 +74,13 @@ paths:
             minimum: 0
             default: 10
       responses:
-        200:
+        '200':
           description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/CountryPage'
-        500:
+        '500':
           description: Internal server error
           content:
             application/json:
@@ -100,13 +100,13 @@ paths:
           schema:
             type: integer
       responses:
-        200:
+        '200':
           description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/CountryDto'
-        500:
+        '500':
           description: Internal server error
           content:
             application/json:
@@ -141,13 +141,13 @@ paths:
             minimum: 0
             default: 10
       responses:
-        200:
+        '200':
           description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/CityPage'
-        500:
+        '500':
           description: Internal server error
           content:
             application/json:
@@ -176,13 +176,13 @@ paths:
             minimum: 0
             default: 10
       responses:
-        200:
+        '200':
           description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/CustomerPage'
-        500:
+        '500':
           description: Internal server error
           content:
             application/json:
@@ -199,15 +199,15 @@ paths:
             schema:
               $ref: '#/components/schemas/CustomerForm'
       responses:
-        201:
+        '201':
           description: Customer successfully created
-        400:
+        '400':
           description: Bad request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        500:
+        '500':
           description: Internal server error
           content:
             application/json:
@@ -228,19 +228,19 @@ paths:
       tags:
         - customers
       responses:
-        200:
+        '200':
           description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/CustomerDto'
-        404:
+        '404':
           description: Not found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        500:
+        '500':
           description: Internal server error
           content:
             application/json:
@@ -257,19 +257,25 @@ paths:
             schema:
               $ref: '#/components/schemas/CustomerForm'
       responses:
-        202:
+        '202':
           description: Accepted
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/CustomerForm'
-        404:
+        '403':
+          description: Not autorised to update the customer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
           description: Not found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        500:
+        '500':
           description: Internal server error
           content:
             application/json:
@@ -281,25 +287,25 @@ paths:
       tags:
         - customers
       responses:
-        204:
+        '204':
           description: Customer successfully deactivated
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/CustomerDto'
-        403:
+        '403':
           description: Not autorised to deactivate
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        404:
+        '404':
           description: Customer not found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        500:
+        '500':
           description: Internal server error
           content:
             application/json:
@@ -328,13 +334,13 @@ paths:
             minimum: 0
             default: 10
       responses:
-        200:
+        '200':
           description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/OrderPage'
-        500:
+        '500':
           description: Internal server error
           content:
             application/json:
@@ -477,18 +483,8 @@ components:
             password:
               type: string
               format: byte
-            address_line_1:
-              type: string
-              maxLength: 50
-            address_line_2:
-              type: string
-              maxLength: 50
-            postal_code:
-              type: string
-              maxLength: 9
-            city_id:
-              type: integer
-              minimum: 1
+            address:
+              $ref: '#/components/schemas/AddressForm'
           required:
             - email
             - username

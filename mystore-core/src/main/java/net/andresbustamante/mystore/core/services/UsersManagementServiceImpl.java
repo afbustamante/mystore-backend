@@ -13,6 +13,7 @@ import net.andresbustamante.mystore.api.exceptions.InvalidUsernameException;
 import net.andresbustamante.mystore.api.exceptions.ObjectNotFoundException;
 import net.andresbustamante.mystore.api.model.UserCreation;
 import net.andresbustamante.mystore.api.services.UsersManagementService;
+import net.andresbustamante.mystore.api.util.UserContext;
 import net.andresbustamante.mystore.jpa.dao.UserDao;
 import net.andresbustamante.mystore.jpa.entities.UserEntity;
 
@@ -30,7 +31,7 @@ public class UsersManagementServiceImpl implements UsersManagementService {
 
     @Override
     @Transactional(rollbackFor = ApplicationException.class)
-    public int createUser(@NonNull final UserCreation user) throws ApplicationException {
+    public int createUser(@NonNull final UserCreation user, final UserContext ctx) throws ApplicationException {
         if (userDao.existsByUsername(user.username().toLowerCase(Locale.getDefault()))) {
             throw new InvalidUsernameException("A user already exists with the given username");
         }
@@ -48,7 +49,7 @@ public class UsersManagementServiceImpl implements UsersManagementService {
 
     @Override
     @Transactional(rollbackFor = ApplicationException.class)
-    public void deactivateUser(@NonNull final Integer userId) throws ApplicationException {
+    public void deactivateUser(@NonNull final Integer userId, final UserContext ctx) throws ApplicationException {
         UserEntity user = userDao.findById(userId).orElseThrow(() -> new ObjectNotFoundException("User not found"));
         userDao.delete(user); // Hibernate makes a soft-delete here
 

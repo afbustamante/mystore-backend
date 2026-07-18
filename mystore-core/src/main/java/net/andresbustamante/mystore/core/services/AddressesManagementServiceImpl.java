@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import net.andresbustamante.mystore.api.model.AddressCreation;
 import net.andresbustamante.mystore.api.services.AddressesManagementService;
+import net.andresbustamante.mystore.api.util.UserContext;
 import net.andresbustamante.mystore.jpa.dao.AddressDao;
 import net.andresbustamante.mystore.jpa.dao.CityDao;
 import net.andresbustamante.mystore.jpa.entities.AddressEntity;
@@ -25,7 +26,7 @@ public class AddressesManagementServiceImpl implements AddressesManagementServic
 
     @Transactional
     @Override
-    public int createAddress(final AddressCreation address) {
+    public int createAddress(final AddressCreation address, final UserContext ctx) {
         AddressEntity newAddress = new AddressEntity();
         newAddress.setLine1(address.line1());
         newAddress.setLine2(address.line2());

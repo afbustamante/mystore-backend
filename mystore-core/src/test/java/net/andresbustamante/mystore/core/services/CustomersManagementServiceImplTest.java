@@ -16,6 +16,7 @@ import net.andresbustamante.mystore.api.model.CustomerCreation;
 import net.andresbustamante.mystore.api.model.UserCreation;
 import net.andresbustamante.mystore.api.services.AddressesManagementService;
 import net.andresbustamante.mystore.api.services.UsersManagementService;
+import net.andresbustamante.mystore.api.util.UserContext;
 import net.andresbustamante.mystore.jpa.dao.AddressDao;
 import net.andresbustamante.mystore.jpa.dao.CustomerDao;
 import net.andresbustamante.mystore.jpa.dao.UserDao;
@@ -56,19 +57,19 @@ class CustomersManagementServiceImplTest {
 
         AddressEntity storedAddress = new AddressEntity();
         storedAddress.setId(2000);
-        when(addressesManagementService.createAddress(any(AddressCreation.class))).thenReturn(2000);
+        when(addressesManagementService.createAddress(any(AddressCreation.class), any(UserContext.class))).thenReturn(2000);
         when(addressDao.getReferenceById(2000)).thenReturn(storedAddress);
 
         UserEntity storedUser = new UserEntity();
         storedUser.setId(3000);
-        when(usersManagementService.createUser(any(UserCreation.class))).thenReturn(3000);
+        when(usersManagementService.createUser(any(UserCreation.class), any(UserContext.class))).thenReturn(3000);
         when(userDao.getReferenceById(3000)).thenReturn(storedUser);
 
-        int id = customersManagementService.createCustomer(customer);
+        int id = customersManagementService.createCustomer(customer, new UserContext("test"));
 
         assertEquals(1000, id);
 
-        verify(addressesManagementService).createAddress(any(AddressCreation.class));
-        verify(usersManagementService).createUser(any(UserCreation.class));
+        verify(addressesManagementService).createAddress(any(AddressCreation.class), any(UserContext.class));
+        verify(usersManagementService).createUser(any(UserCreation.class), any(UserContext.class));
     }
 }

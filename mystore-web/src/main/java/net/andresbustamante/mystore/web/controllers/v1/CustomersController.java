@@ -15,6 +15,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import net.andresbustamante.mystore.api.exceptions.ApplicationException;
 import net.andresbustamante.mystore.api.exceptions.FunctionalException;
+import net.andresbustamante.mystore.api.exceptions.ObjectNotFoundException;
+import net.andresbustamante.mystore.api.exceptions.SecurityException;
 import net.andresbustamante.mystore.api.model.CustomerCreation;
 import net.andresbustamante.mystore.api.model.Customer;
 import net.andresbustamante.mystore.api.model.CustomerSearchCriteria;
@@ -51,16 +53,16 @@ public class CustomersController extends AbstractController implements Customers
     public ResponseEntity<Void> createCustomer(final CustomerForm body) {
         CustomerCreation customer = new CustomerCreation(
                 body.getFirstName(), body.getLastName(), body.getEmail(), body.getPhoneNumber(),
-                body.getUsername(), body.getPassword(), body.getAddressLine1(), body.getAddressLine2(),
-                body.getPostalCode(), body.getCityId()
+                body.getUsername(), body.getPassword(), body.getAddress().getLine1(), body.getAddress().getLine2(),
+                body.getAddress().getPostalCode(), body.getAddress().getCityId()
         );
 
         try {
-            int id = customersManagementService.createCustomer(customer);
+            int id = customersManagementService.createCustomer(customer, getUserContext());
 
             return ResponseEntity.created(URI.create(String.format("/api/v1/customers/%d", id))).build();
         } catch (FunctionalException e) {
-            throw new ResponseStatusException(CONFLICT, "Impossible to create the new customer", e);
+            throw new ResponseStatusException(CONFLICT, e.getMessage(), e);
         } catch (ApplicationException e) {
             throw new ResponseStatusException(INTERNAL_SERVER_ERROR, "Error while creating the new customer", e);
         }
@@ -73,9 +75,13 @@ public class CustomersController extends AbstractController implements Customers
         );
 
         try {
-            customersManagementService.updateCustomer(id, customer);
+            customersManagementService.updateCustomer(id, customer, getUserContext());
 
             return ResponseEntity.accepted().build();
+        } catch (SecurityException e) {
+            throw new ResponseStatusException(FORBIDDEN, "Not allowed to update this customer", e);
+        } catch (ObjectNotFoundException e) {
+            throw new ResponseStatusException(NOT_FOUND, "Customer not found", e);
         } catch (FunctionalException e) {
             throw new ResponseStatusException(CONFLICT, "Impossible to update the customer", e);
         } catch (ApplicationException e) {
@@ -103,10 +109,14 @@ public class CustomersController extends AbstractController implements Customers
     @Override
     public ResponseEntity<CustomerDto> deactivateCustomer(final Integer customerId) {
         try {
-            customersManagementService.deactivateCustomer(customerId);
+            customersManagementService.deactivateCustomer(customerId, getUserContext());
             return ResponseEntity.noContent().build();
+        } catch (SecurityException e) {
+            throw new ResponseStatusException(FORBIDDEN, "Not allowed to deactivate this customer", e);
+        } catch (ObjectNotFoundException e) {
+            throw new ResponseStatusException(NOT_FOUND, "Customer not found", e);
         } catch (FunctionalException e) {
-            throw new ResponseStatusException(UNAUTHORIZED, "Not allowed to deactivate this user", e);
+            throw new ResponseStatusException(CONFLICT, "Impossible to deactivate this customer", e);
         } catch (ApplicationException e) {
             throw new ResponseStatusException(INTERNAL_SERVER_ERROR, "Error while deactivating this user", e);
         }
