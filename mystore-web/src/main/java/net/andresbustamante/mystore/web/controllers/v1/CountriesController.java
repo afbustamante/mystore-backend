@@ -1,13 +1,17 @@
 package net.andresbustamante.mystore.web.controllers.v1;
 
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
+
 import jakarta.servlet.http.HttpServletRequest;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import net.andresbustamante.mystore.api.exceptions.ApplicationException;
 import net.andresbustamante.mystore.api.model.City;
 import net.andresbustamante.mystore.api.model.Country;
 import net.andresbustamante.mystore.api.util.Page;
@@ -40,18 +44,30 @@ public class CountriesController extends AbstractController implements Countries
 
     @Override
     public ResponseEntity<CityPage> findCitiesByCountry(final Integer id, final Integer pageNumber, final Integer pageSize) {
-        Page<City> cities = geographySearchService.findCitiesByCountry(id, PagingRequest.of(pageNumber, pageSize));
-        return ResponseEntity.ok(cityDtoMapper.map(cities));
+        try {
+            Page<City> cities = geographySearchService.findCitiesByCountry(id, PagingRequest.of(pageNumber, pageSize));
+            return ResponseEntity.ok(cityDtoMapper.map(cities));
+        } catch (ApplicationException e) {
+            throw new ResponseStatusException(INTERNAL_SERVER_ERROR, e.getMessage(), e);
+        }
     }
 
     @Override
     public ResponseEntity<CountryPage> findCountries(final Integer pageNumber, final Integer pageSize) {
-        Page<Country> countries = geographySearchService.findCountries(PagingRequest.of(pageNumber, pageSize));
-        return ResponseEntity.ok(countryDtoMapper.map(countries));
+        try {
+            Page<Country> countries = geographySearchService.findCountries(PagingRequest.of(pageNumber, pageSize));
+            return ResponseEntity.ok(countryDtoMapper.map(countries));
+        } catch (ApplicationException e) {
+            throw new ResponseStatusException(INTERNAL_SERVER_ERROR, e.getMessage(), e);
+        }
     }
 
     @Override
     public ResponseEntity<CountryDto> findCountry(final Integer id) {
-        return ResponseEntity.ok(countryDtoMapper.map(geographySearchService.findCountry(id)));
+        try {
+            return ResponseEntity.ok(countryDtoMapper.map(geographySearchService.findCountry(id)));
+        } catch (ApplicationException e) {
+            throw new ResponseStatusException(INTERNAL_SERVER_ERROR, e.getMessage(), e);
+        }
     }
 }

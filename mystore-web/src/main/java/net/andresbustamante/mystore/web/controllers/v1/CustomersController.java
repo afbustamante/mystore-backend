@@ -100,10 +100,15 @@ public class CustomersController extends AbstractController implements Customers
         CustomerSearchCriteria criteria = CustomerSearchCriteria.builder()
                 .country("France")
                 .build();
-        Page<Customer> customers = customersSearchService.findCustomers(criteria,
-                PagingRequest.of(pageNumber, pageSize));
 
-        return ResponseEntity.ok(customerDtoMapper.map(customers));
+        try {
+            Page<Customer> customers = customersSearchService.findCustomers(criteria,
+                    PagingRequest.of(pageNumber, pageSize));
+
+            return ResponseEntity.ok(customerDtoMapper.map(customers));
+        } catch (ApplicationException e) {
+            throw new ResponseStatusException(INTERNAL_SERVER_ERROR, e.getMessage(), e);
+        }
     }
 
     @Override

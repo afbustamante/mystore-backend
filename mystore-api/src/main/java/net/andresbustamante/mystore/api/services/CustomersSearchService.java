@@ -2,6 +2,7 @@ package net.andresbustamante.mystore.api.services;
 
 import java.util.Collection;
 
+import net.andresbustamante.mystore.api.exceptions.ApplicationException;
 import net.andresbustamante.mystore.api.model.Customer;
 import net.andresbustamante.mystore.api.model.CustomerSearchCriteria;
 import net.andresbustamante.mystore.api.util.Page;
@@ -9,7 +10,7 @@ import net.andresbustamante.mystore.api.util.PagingRequest;
 
 public interface CustomersSearchService {
 
-    Collection<Customer> findCustomers(CustomerSearchCriteria criteria);
+    Collection<Customer> findCustomers(CustomerSearchCriteria criteria) throws ApplicationException;
 
-    Page<Customer> findCustomers(CustomerSearchCriteria criteria, PagingRequest pagingRequest);
+    Page<Customer> findCustomers(CustomerSearchCriteria criteria, PagingRequest pagingRequest) throws ApplicationException;
 }

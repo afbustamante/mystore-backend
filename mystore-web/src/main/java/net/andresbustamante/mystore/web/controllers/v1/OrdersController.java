@@ -1,5 +1,7 @@
 package net.andresbustamante.mystore.web.controllers.v1;
 
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
+
 import java.time.LocalDate;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -7,9 +9,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import net.andresbustamante.mystore.api.exceptions.ApplicationException;
 import net.andresbustamante.mystore.api.model.Order;
 import net.andresbustamante.mystore.api.model.OrderSearchCriteria;
 import net.andresbustamante.mystore.api.util.Page;
@@ -41,7 +45,11 @@ public class OrdersController extends AbstractController implements OrdersApi {
                 .dateMax(LocalDate.parse("2009-01-31"))
                 .build();
 
-        Page<Order> orders = ordersSearchService.findOrders(criteria, PagingRequest.of(pageNumber, pageSize));
-        return ResponseEntity.ok(orderDtoMapper.map(orders));
+        try {
+            Page<Order> orders = ordersSearchService.findOrders(criteria, PagingRequest.of(pageNumber, pageSize));
+            return ResponseEntity.ok(orderDtoMapper.map(orders));
+        } catch (ApplicationException e) {
+            throw new ResponseStatusException(INTERNAL_SERVER_ERROR, e.getMessage(), e);
+        }
     }
 }
