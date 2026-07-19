@@ -1,0 +1,31 @@
+city_id,name,country_id
+1,Sydney,1
+2,Melbourne,1
+3,Vancouver,2
+4,Toronto,2
+5,Santiago de Chile,3
+6,Valparaíso,3
+7,Beijing,4
+8,Wuhan,4
+9,Paris,5
+10,Lyon,5
+11,Marseille,5
+12,Berlin,6
+13,Frankfurt,6
+14,Hamburg,6
+15,Tokyo,7
+16,Kyoto,7
+17,Osaka,7
+18,Moscow,8
+19,St Petersburg,8
+20,Johannesburg,9
+21,Pretoria,9
+22,London,10
+23,Liverpool,10
+24,Manchester,10
+25,Washington,11
+26,New York,11
+27,Los Angeles,11
+28,San Francisco,11
+29,Boston,11
+30,Houston,11

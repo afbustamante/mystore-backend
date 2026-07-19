@@ -1,0 +1,6 @@
+categories
+countries
+cities
+users_
+addresses
+customers

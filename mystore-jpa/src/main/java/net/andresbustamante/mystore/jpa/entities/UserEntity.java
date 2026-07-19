@@ -17,7 +17,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "users", uniqueConstraints = @UniqueConstraint(name = "uc_users_username", columnNames = "username"))
+@Table(name = "users_", uniqueConstraints = @UniqueConstraint(name = "uc_users_username", columnNames = "username"))
 @SoftDelete(strategy = SoftDeleteType.ACTIVE, columnName = "active")
 @Getter
 @Setter

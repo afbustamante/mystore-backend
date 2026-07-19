@@ -63,6 +63,7 @@
     <commons-collections.version>4.5.0</commons-collections.version>
 
     <aspectjweaver.version>1.9.24</aspectjweaver.version>
+    <dbunit.version>3.2.0</dbunit.version>
     <ehcache.version>3.12.0</ehcache.version>
     <flyway.version>11.20.3</flyway.version>
     <h2.version>2.4.240</h2.version>
@@ -77,6 +78,7 @@
     <mockito.version>5.23.0</mockito.version>
     <postgresql.version>42.7.13</postgresql.version>
     <slf4j.version>2.0.18</slf4j.version>
+    <spring-test-dbunit.version>1.3.0</spring-test-dbunit.version>
     <swagger-annotations.version>2.2.52</swagger-annotations.version>
   </properties>
 
@@ -283,6 +285,18 @@
         <groupId>com.h2database</groupId>
         <artifactId>h2</artifactId>
         <version>${h2.version}</version>
+      </dependency>
+
+      <!-- DBUnit -->
+      <dependency>
+        <groupId>org.dbunit</groupId>
+        <artifactId>dbunit</artifactId>
+        <version>${dbunit.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.github.springtestdbunit</groupId>
+        <artifactId>spring-test-dbunit</artifactId>
+        <version>${spring-test-dbunit.version}</version>
       </dependency>
 
       <!-- Logging -->

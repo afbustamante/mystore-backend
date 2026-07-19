@@ -1,7 +1,7 @@
 package net.andresbustamante.mystore.jpa.entities;
 
 import java.io.Serializable;
-import java.time.Instant;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
@@ -28,7 +28,7 @@ public class AuditableEntity implements Serializable {
 
     @CreatedDate
     @Column(name = "created_at", nullable = false, updatable = false)
-    private Instant creationDate;
+    private LocalDateTime creationDate;
 
     @LastModifiedBy
     @Column(name = "updated_by")
@@ -36,7 +36,7 @@ public class AuditableEntity implements Serializable {
 
     @LastModifiedDate
     @Column(name = "updated_at")
-    private Instant lastUpdate;
+    private LocalDateTime lastUpdate;
 
     protected AuditableEntity() {
         // no-op
